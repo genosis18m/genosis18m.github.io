@@ -2,14 +2,50 @@
 
 import { useState } from 'react'
 
-export default function ResumeButton() {
-  const [checked, setChecked] = useState(false)
+type Status = 'idle' | 'loading' | 'done' | 'cancelled'
 
-  const handleClick = () => {
-    if (checked) return
-    setChecked(true)
-    // Reset after animation completes (~4.2s)
-    setTimeout(() => setChecked(false), 4200)
+export default function ResumeButton() {
+  const [status, setStatus] = useState<Status>('idle')
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (status !== 'idle') {
+      e.preventDefault()
+      return
+    }
+
+    setStatus('loading')
+
+    let blurTime: number | null = null
+
+    const cleanup = () => {
+      window.removeEventListener('blur', onBlur)
+      window.removeEventListener('focus', onFocus)
+    }
+
+    const onBlur = () => {
+      blurTime = Date.now()
+    }
+
+    const onFocus = () => {
+      cleanup()
+      const elapsed = blurTime ? Date.now() - blurTime : 9999
+      // If user returned from dialog very quickly (<= 2s), treat as cancelled
+      const wasCancelled = blurTime !== null && elapsed <= 2000
+      setStatus(wasCancelled ? 'cancelled' : 'done')
+      setTimeout(() => setStatus('idle'), 2500)
+    }
+
+    window.addEventListener('blur', onBlur)
+    window.addEventListener('focus', onFocus)
+
+    // Fallback for browsers that download silently (no dialog), or mobile
+    setTimeout(() => {
+      if (blurTime === null) {
+        cleanup()
+        setStatus('done')
+        setTimeout(() => setStatus('idle'), 2500)
+      }
+    }, 1200)
   }
 
   return (
@@ -36,23 +72,6 @@ export default function ResumeButton() {
           text-decoration: none;
         }
 
-        .resume-label::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background-color: #fff;
-          width: 8px;
-          height: 8px;
-          transition: all 0.4s ease;
-          border-radius: 100%;
-          margin: auto;
-          opacity: 0;
-          visibility: hidden;
-        }
-
         .resume-label .resume-title {
           font-size: 15px;
           font-weight: 800;
@@ -67,9 +86,10 @@ export default function ResumeButton() {
           letter-spacing: 0.08em;
           font-family: inherit;
           padding-left: 55px;
+          white-space: nowrap;
         }
 
-        .resume-label .resume-title:last-child {
+        .resume-label .resume-title.secondary {
           opacity: 0;
           visibility: hidden;
           padding-left: 0;
@@ -125,98 +145,153 @@ export default function ResumeButton() {
           transition: all 0.4s ease;
         }
 
-        .resume-label.active {
+        /* Loading state */
+        .resume-label.loading {
           width: 57px;
-          animation: resume-installed 0.4s ease 3.5s forwards;
         }
 
-        .resume-label.active::before {
-          animation: resume-rotate 3s ease-in-out 0.4s forwards;
-        }
-
-        .resume-label.active .resume-circle {
-          animation:
-            resume-pulse 1s forwards,
-            resume-circle-delete 0.2s ease 3.5s forwards;
+        .resume-label.loading .resume-circle {
+          animation: resume-pulse 1s infinite;
           rotate: 180deg;
         }
 
-        .resume-label.active .resume-circle::before {
-          animation: resume-installing 3s ease-in-out forwards;
+        .resume-label.loading .resume-circle::before {
+          animation: resume-installing 1.5s ease-in-out infinite;
         }
 
-        .resume-label.active .resume-circle .resume-icon {
+        .resume-label.loading .resume-circle .resume-icon {
           opacity: 0;
           visibility: hidden;
         }
 
-        .resume-label.active .resume-circle .resume-square {
+        .resume-label.loading .resume-circle .resume-square {
           opacity: 1;
           visibility: visible;
         }
 
-        .resume-label.active .resume-title {
+        .resume-label.loading .resume-title {
           opacity: 0;
           visibility: hidden;
         }
 
-        .resume-label.active .resume-title:last-child {
-          animation: resume-show-message 0.4s ease 3.5s forwards;
+        /* Done state */
+        .resume-label.done {
+          width: 150px;
+          border-color: rgb(35, 174, 35);
+          animation: none;
+        }
+
+        .resume-label.done .resume-circle {
+          background-color: rgb(35, 174, 35);
+          animation: none;
+          rotate: 0deg;
+        }
+
+        .resume-label.done .resume-circle::before {
+          height: 0;
+          animation: none;
+        }
+
+        .resume-label.done .resume-circle .resume-icon {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .resume-label.done .resume-circle .resume-square {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        .resume-label.done .resume-title.primary {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        .resume-label.done .resume-title.secondary {
+          opacity: 1;
+          visibility: visible;
+          color: rgb(35, 174, 35);
+        }
+
+        /* Cancelled state */
+        .resume-label.cancelled {
+          width: 150px;
+          border-color: rgb(239, 68, 68);
+          animation: none;
+        }
+
+        .resume-label.cancelled .resume-circle {
+          background-color: rgb(239, 68, 68);
+          animation: none;
+          rotate: 0deg;
+        }
+
+        .resume-label.cancelled .resume-circle::before {
+          height: 0;
+          animation: none;
+        }
+
+        .resume-label.cancelled .resume-circle .resume-icon {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .resume-label.cancelled .resume-circle .resume-square {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        .resume-label.cancelled .resume-title.primary {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        .resume-label.cancelled .resume-title.secondary {
+          opacity: 1;
+          visibility: visible;
+          color: rgb(239, 68, 68);
         }
 
         @keyframes resume-pulse {
           0% { scale: 0.95; box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
-          70% { scale: 1; box-shadow: 0 0 0 16px rgba(255,255,255,0); }
+          70% { scale: 1; box-shadow: 0 0 0 10px rgba(255,255,255,0); }
           100% { scale: 0.95; box-shadow: 0 0 0 0 rgba(255,255,255,0); }
         }
         @keyframes resume-installing {
-          from { height: 0; }
-          to { height: 100%; }
-        }
-        @keyframes resume-rotate {
-          0% { transform: rotate(-90deg) translate(27px) rotate(0); opacity: 1; visibility: visible; }
-          99% { transform: rotate(270deg) translate(27px) rotate(270deg); opacity: 1; visibility: visible; }
-          100% { opacity: 0; visibility: hidden; }
-        }
-        @keyframes resume-installed {
-          100% { width: 150px; border-color: rgb(35, 174, 35); }
-        }
-        @keyframes resume-circle-delete {
-          100% { opacity: 0; visibility: hidden; }
-        }
-        @keyframes resume-show-message {
-          100% { opacity: 1; visibility: visible; padding-left: 0; left: 0; right: 0; text-align: center; }
+          0% { height: 0; }
+          50% { height: 100%; }
+          100% { height: 0; }
         }
       `}</style>
 
       <div className="resume-container">
-        {/* Real <a> element for cross-browser + mobile download support */}
         <a
           href="/MohitAdoni_Resume_main.pdf"
           download="MohitAdoni_Resume.pdf"
-          className={`resume-label ${checked ? 'active' : ''}`}
+          className={`resume-label ${status}`}
           onClick={handleClick}
           aria-label="Download Resume"
         >
           <div className="resume-circle">
-            <svg
-              className="resume-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
+            {status === 'cancelled' ? (
+              <svg className="resume-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            ) : (
+              <svg className="resume-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+            )}
             <div className="resume-square" />
           </div>
 
-          <span className="resume-title">Resume</span>
-          <span className="resume-title">Done ✓</span>
+          <span className="resume-title primary">Resume</span>
+          <span className="resume-title secondary">
+            {status === 'cancelled' ? 'Cancelled' : 'Done ✓'}
+          </span>
         </a>
       </div>
     </>
