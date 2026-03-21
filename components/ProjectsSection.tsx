@@ -231,20 +231,46 @@ export default function ProjectsSection() {
               <h4 className="font-display font-bold text-sm tracking-widest uppercase mb-5" style={{ color: active.accentColor }}>
                 Tech Stack
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-10">
                 {active.tech.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
+                    className="px-4 py-2 rounded-lg text-sm font-semibold transition-colors duration-300 backdrop-blur-sm"
                     style={{
-                      background: `${active.accentColor}15`,
+                      background: `${active.accentColor}1A`,
+                      color: active.accentColor,
                       border: `1px solid ${active.accentColor}33`,
-                      color: 'var(--text-secondary)',
                     }}
                   >
                     {tech}
                   </span>
                 ))}
+              </div>
+              
+              {/* Repository Links */}
+              <div>
+                <h4 className="font-display font-bold text-sm tracking-widest uppercase mb-6 opacity-80" style={{ color: active.accentColor }}>
+                  Repository
+                </h4>
+                <a
+                  href={active.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gh-button-icon block w-fit"
+                >
+                  <div className="gh-icon">
+                    <FiGithub />
+                  </div>
+                  <div className="gh-cube">
+                    <span className="gh-side gh-front bg-gray-900 border border-gray-700">Code</span>
+                    <span 
+                      className="gh-side gh-top" 
+                      style={{ backgroundColor: active.accentColor, color: '#fff' }}
+                    >
+                      GitHub
+                    </span>
+                  </div>
+                </a>
               </div>
 
               {/* Project number indicator */}
