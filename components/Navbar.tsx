@@ -157,16 +157,6 @@ export default function Navbar() {
 
             <ThemeToggle />
 
-            {/* Hire Me — blob mask hover animation, opens Gmail */}
-            <a
-              href={HIRE_ME_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hire-me-wrapper"
-              aria-label="Hire Me"
-            >
-              <span className="hire-me-label">Hire Me</span>
-            </a>
           </div>
 
           {/* Mobile: ThemeToggle + hamburger */}
@@ -223,15 +213,6 @@ export default function Navbar() {
               style={{ color: 'var(--text-muted)' }}
             >
               <FiLinkedin size={18} />
-            </a>
-            <a
-              href={HIRE_ME_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-cartoon font-semibold px-3 py-1 rounded-full"
-              style={{ background: 'linear-gradient(135deg,#8B5CF6,#3B82F6)', color: 'white' }}
-            >
-              Hire Me
             </a>
           </div>
         </div>
