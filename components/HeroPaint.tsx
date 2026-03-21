@@ -113,7 +113,7 @@ export default function PaintHero() {
             style={{
               fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
               fontSize: 'clamp(0.8rem, 2.2vw, 1.25rem)',
-              background: isLight
+              backgroundImage: isLight
                 ? 'linear-gradient(90deg, #7c3aed, #2563eb, #7c3aed)'
                 : 'linear-gradient(90deg, #a5f3fc, #818cf8, #c4b5fd)',
               WebkitBackgroundClip: 'text',

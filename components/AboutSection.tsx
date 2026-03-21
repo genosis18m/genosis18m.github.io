@@ -216,12 +216,13 @@ export default function AboutSection() {
           {/* Bio */}
           <div className="about-card h-full">
             <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              I&apos;m a <strong style={{ color: 'var(--text-primary)' }}>Full-Stack &amp; Agentic AI Developer</strong> at IIT Roorkee,
-              passionate about building systems at the intersection of{' '}
-              <span style={{ color: 'var(--paint-purple)' }}>AI/ML</span> and{' '}
-              <span style={{ color: 'var(--paint-blue)' }}>high-performance backend engineering</span>.
-              I love turning complex ideas into production-ready products — from real-time multiplayer platforms to
-              AI-powered SaaS tools.
+              3rd-year student at <strong style={{ color: 'var(--text-primary)' }}>IIT Roorkee</strong>, studying Materials Engineering — though most of my time goes into building software, not studying it.
+              I got into development because I genuinely enjoy the craft: turning ideas into real, working things.
+              I gravitate toward{' '}
+              <span style={{ color: 'var(--paint-purple)' }}>AI systems</span>,{' '}
+              <span style={{ color: 'var(--paint-blue)' }}>high-performance backends</span>, and anything that pushes what software can do.
+              Outside of code, I&apos;m deep into{' '}
+              <span style={{ color: 'var(--paint-orange)' }}>anime and manga</span> — the kind of storytelling that makes you think.
             </p>
           </div>
 

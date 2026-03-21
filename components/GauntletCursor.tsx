@@ -1,16 +1,14 @@
- 'use client'
+'use client'
 
 import { useEffect } from 'react'
 
 const BUBBLE_COLORS = ['#ef4444', '#3b82f6', '#22c55e', '#f97316']
-const SIZE = 56 // cursor size in px
+const SIZE = 56
 
-/** Strip near-white pixels from a canvas (chroma-key white bg removal) */
 function removeWhiteBg(ctx: CanvasRenderingContext2D, w: number, h: number) {
   const d = ctx.getImageData(0, 0, w, h)
   for (let i = 0; i < d.data.length; i += 4) {
     const r = d.data[i], g = d.data[i + 1], b = d.data[i + 2]
-    // any pixel brighter than threshold on all channels → transparent
     if (r > 210 && g > 210 && b > 210) d.data[i + 3] = 0
   }
   ctx.putImageData(d, 0, 0)
@@ -18,11 +16,12 @@ function removeWhiteBg(ctx: CanvasRenderingContext2D, w: number, h: number) {
 
 export default function GauntletCursor() {
   useEffect(() => {
-    // Wipe stale nodes
+    // Skip on touch devices — mobile users don't need a custom cursor
+    if (window.matchMedia('(pointer: coarse)').matches) return
+
     document.getElementById('gc-root')?.remove()
     document.getElementById('gc-style')?.remove()
 
-    // ── Styles ────────────────────────────────────────────────────
     const style = document.createElement('style')
     style.id = 'gc-style'
     style.textContent = `
@@ -32,6 +31,7 @@ export default function GauntletCursor() {
         pointer-events: none; z-index: 99999;
         will-change: transform;
         margin-left: -8px; margin-top: -4px;
+        transition: opacity 0.15s ease;
       }
       #gc-root canvas {
         display: block;
@@ -44,7 +44,6 @@ export default function GauntletCursor() {
     `
     document.head.appendChild(style)
 
-    // ── Cursor wrapper + canvas ───────────────────────────────────
     const wrap = document.createElement('div')
     wrap.id = 'gc-root'
 
@@ -56,8 +55,6 @@ export default function GauntletCursor() {
 
     const ctx = canvas.getContext('2d')!
 
-    // ── Hidden GIF img (drives animation frames) ──────────────────
-    // We draw THIS to the canvas each frame so we control timing
     const gif = new Image()
     gif.src = '/gauntlet-2.gif'
 
@@ -65,8 +62,8 @@ export default function GauntletCursor() {
     let snapping = false
     let snapEndTime = 0
     let gifReady = false
+    let onScreen = false
 
-    // Draw one frozen frame (idle state)
     const freezeFrame = () => {
       ctx.clearRect(0, 0, SIZE, SIZE)
       ctx.drawImage(gif, 0, 0, SIZE, SIZE)
@@ -78,26 +75,36 @@ export default function GauntletCursor() {
       freezeFrame()
     }
 
-    // ── Mouse tracking ────────────────────────────────────────────
-    const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY }
-    window.addEventListener('mousemove', onMove, { passive: true })
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX
+      my = e.clientY
+      if (!onScreen) {
+        onScreen = true
+        wrap.style.opacity = '1'
+      }
+    }
 
-    // ── rAF loop: position + live-draw during snap ────────────────
+    const onLeave = () => {
+      onScreen = false
+      wrap.style.opacity = '0'
+    }
+
+    window.addEventListener('mousemove', onMove, { passive: true })
+    document.addEventListener('mouseleave', onLeave)
+
     const tick = () => {
       wrap.style.transform = `translate(${mx}px, ${my}px)`
 
       if (snapping && gifReady) {
         const now = performance.now()
         if (now < snapEndTime) {
-          // Live-draw GIF frames with white removal → snap animation plays
           ctx.clearRect(0, 0, SIZE, SIZE)
           ctx.drawImage(gif, 0, 0, SIZE, SIZE)
           removeWhiteBg(ctx, SIZE, SIZE)
         } else {
-          // Snap done → freeze on first frame again
           snapping = false
-          gif.src = '/gauntlet-2.gif' // reset GIF to frame 1
-          setTimeout(freezeFrame, 60)  // draw after browser reloads src
+          gif.src = '/gauntlet-2.gif'
+          setTimeout(freezeFrame, 60)
         }
       }
 
@@ -105,19 +112,16 @@ export default function GauntletCursor() {
     }
     raf = requestAnimationFrame(tick)
 
-    // ── Click → snap + bubbles ────────────────────────────────────
     const onDown = () => {
       if (!gifReady) return
 
-      // Reload GIF src → resets to frame 1 → snap plays from start
       gif.src = ''
       requestAnimationFrame(() => {
         gif.src = '/gauntlet-2.gif'
         snapping = true
-        snapEndTime = performance.now() + 900 // play for 900 ms
+        snapEndTime = performance.now() + 900
       })
 
-      // Coloured bubble particles
       for (let i = 0; i < 8; i++) {
         const b = document.createElement('div')
         b.className = 'gc-bubble'
@@ -150,6 +154,7 @@ export default function GauntletCursor() {
       cancelAnimationFrame(raf)
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mousedown', onDown)
+      document.removeEventListener('mouseleave', onLeave)
       wrap.remove()
       style.remove()
       document.querySelectorAll('.gc-bubble').forEach(b => b.remove())
