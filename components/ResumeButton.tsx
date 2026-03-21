@@ -62,21 +62,25 @@ export default function ResumeButton() {
         }
 
         .resume-label .resume-title {
-          font-size: 14px;
-          font-weight: 700;
+          font-size: 15px;
+          font-weight: 800;
           color: #fff;
           transition: all 0.4s ease;
           position: absolute;
+          left: 0;
           right: 18px;
-          bottom: 14px;
+          top: 50%;
+          transform: translateY(-50%);
           text-align: center;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.08em;
           font-family: inherit;
+          padding-left: 55px;
         }
 
         .resume-label .resume-title:last-child {
           opacity: 0;
           visibility: hidden;
+          padding-left: 0;
         }
 
         .resume-label .resume-circle {
@@ -189,7 +193,7 @@ export default function ResumeButton() {
           100% { opacity: 0; visibility: hidden; }
         }
         @keyframes resume-show-message {
-          100% { opacity: 1; visibility: visible; right: 56px; }
+          100% { opacity: 1; visibility: visible; padding-left: 0; left: 0; right: 0; text-align: center; }
         }
       `}</style>
 
