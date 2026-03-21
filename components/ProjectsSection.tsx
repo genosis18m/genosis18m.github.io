@@ -188,30 +188,19 @@ export default function ProjectsSection() {
                 backgroundSize: '40px 40px',
               }}
             />
-            <div className="relative z-10">
-              <div className="text-5xl mb-4 opacity-90 drop-shadow-md">{active.icon}</div>
-              <h3 className="font-display font-black text-white mb-2" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
+            {/* Giant Watermark Icon */}
+            <div className="absolute -right-8 -bottom-8 text-[300px] opacity-[0.2] mix-blend-overlay rotate-12 select-none pointer-events-none transition-all duration-700">
+              {active.icon}
+            </div>
+            
+            <div className="relative z-10 flex flex-col justify-start gap-2">
+              <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-3xl shadow-lg border border-white/20 mb-4 drop-shadow-md">
+                {active.icon}
+              </div>
+              <h3 className="font-display font-black text-white mb-2 tracking-tight drop-shadow-md" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
                 {active.title}
               </h3>
-              <p className="text-white/70 font-medium text-lg">{active.tagline}</p>
-
-              {/* Links */}
-              <div className="flex gap-3 mt-6 items-center">
-                <a
-                  href={active.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="gh-button-icon"
-                >
-                  <div className="gh-icon">
-                    <FiGithub />
-                  </div>
-                  <div className="gh-cube">
-                    <span className="gh-side gh-front">Code</span>
-                    <span className="gh-side gh-top">GitHub</span>
-                  </div>
-                </a>
-              </div>
+              <p className="text-white/90 font-medium text-xl border-l-4 border-white/30 pl-4 py-1">{active.tagline}</p>
             </div>
           </div>
 

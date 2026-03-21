@@ -94,25 +94,16 @@ export default function SkillsSection() {
               </div>
 
               {/* Detailing (Second Content) */}
-              <div className="skill-second-content p-6" style={{ background: 'var(--bg-card-hover)' }}>
-                <div className="flex flex-col gap-2 justify-center content-center w-full h-full text-center">
-                  {group.skills.slice(0, 7).map((skill, i) => (
+              <div className="skill-second-content p-4" style={{ background: 'var(--bg-card-hover)' }}>
+                <div className="flex flex-wrap gap-2 justify-center content-center w-full h-full">
+                  {group.skills.map((skill, i) => (
                     <span
                       key={skill}
-                      className="text-xs font-bold tracking-widest transition-all duration-300 hover:scale-110 cursor-default"
-                      style={{
-                        color: 'var(--text-primary)',
-                        opacity: 1 - (i * 0.1),
-                      }}
+                      className="px-2.5 py-1.5 text-[11px] uppercase font-bold tracking-wider rounded-md transition-all duration-300 hover:scale-105 cursor-default text-blue-200 bg-blue-900 border border-blue-500/40 shadow shadow-blue-900/50"
                     >
                       {skill}
                     </span>
                   ))}
-                  {group.skills.length > 7 && (
-                    <span className="text-[9px] uppercase tracking-widest font-semibold opacity-50 mt-1.5" style={{ color: group.color }}>
-                      + {group.skills.length - 7} More
-                    </span>
-                  )}
                 </div>
               </div>
 
