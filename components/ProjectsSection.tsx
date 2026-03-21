@@ -146,7 +146,9 @@ export default function ProjectsSection() {
         </div>
 
         {/* Tab navigation */}
-        <div className="flex flex-nowrap w-full gap-2 py-4 mb-8 justify-center px-4 custom-scrollbar">
+        <div className="flex flex-nowrap overflow-x-auto w-full gap-2 py-4 mb-6 justify-start sm:justify-center px-2"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+        >
           {projects.map((project) => (
             <button
               key={project.id}
@@ -178,7 +180,7 @@ export default function ProjectsSection() {
         >
           {/* Card header with gradient */}
           <div
-            className={`bg-gradient-to-r ${active.color} p-8 md:p-12 relative overflow-hidden`}
+            className={`bg-gradient-to-r ${active.color} p-5 sm:p-8 md:p-12 relative overflow-hidden`}
           >
             {/* Background pattern */}
             <div
@@ -205,7 +207,7 @@ export default function ProjectsSection() {
           </div>
 
           {/* Card body */}
-          <div className="p-8 md:p-12 grid md:grid-cols-2 gap-10">
+          <div className="p-5 sm:p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
             {/* Description */}
             <div>
               <h4 className="font-display font-bold text-sm tracking-widest uppercase mb-5" style={{ color: active.accentColor }}>

@@ -206,6 +206,27 @@ body {
   .section-container {
     padding: 0 1rem;
   }
+  /* Skill cards: 2 columns on mobile, fixed smaller height so they fit */
+  .skill-card {
+    height: 240px;
+  }
+  /* Project tabs: allow scroll on mobile without hiding the bar */
+  .ui-btn {
+    --btn-padding: 10px 12px;
+    --font-size: 12px;
+  }
+  /* Profile card: reduce min width so it fits on small phones */
+  .profile-parent {
+    width: 100% !important;
+    min-height: 220px !important;
+  }
+  /* Resume button shrink on mobile */
+  .resume-label {
+    width: 140px;
+  }
+  .resume-label.active {
+    width: 50px;
+  }
 }
 
 /* Skill Card - Uiverse styling */

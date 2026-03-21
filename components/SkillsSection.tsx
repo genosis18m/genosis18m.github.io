@@ -66,7 +66,7 @@ export default function SkillsSection() {
           </h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 max-w-5xl mx-auto">
           {skillGroups.map((group, groupIdx) => (
             <div
               key={group.category}

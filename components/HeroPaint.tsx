@@ -50,14 +50,14 @@ export default function PaintHero() {
       >
         {/* Name + Coffee Button */}
         <div
-          className={`flex items-center justify-center gap-5 flex-wrap transition-all duration-1000 ${
+          className={`flex items-center justify-center gap-5 flex-wrap px-4 transition-all duration-1000 ${
             showName ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
           <h1
             className="font-black text-center leading-none select-none"
             style={{
-              fontSize: 'clamp(2.8rem, 9vw, 8.5rem)',
+              fontSize: 'clamp(2.4rem, 9vw, 8.5rem)',
               letterSpacing: '-0.03em',
               fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
               background:
@@ -72,8 +72,8 @@ export default function PaintHero() {
             Mohit Adoni
           </h1>
 
-          {/* Coffee button — slightly rotated */}
-          <div style={{ transform: 'rotate(-6deg)', flexShrink: 0 }}>
+          {/* Coffee button — hidden on phones */}
+          <div className="hidden sm:block" style={{ transform: 'rotate(-6deg)', flexShrink: 0 }}>
             <CoffeeButton />
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function PaintHero() {
         {/* CTA Buttons */}
         {showSubtitle && (
           <div
-            className="flex flex-wrap gap-4 mt-10 justify-center"
+            className="flex flex-col sm:flex-row gap-4 mt-8 justify-center items-center px-6"
             style={{ animation: 'fadeInUp 0.8s ease 0.2s both' }}
           >
             <a
