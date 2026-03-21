@@ -15,6 +15,19 @@ export default function ResumeButton() {
 
     setStatus('loading')
 
+    // Detect if touch device — on mobile, downloads happen silently, no dialog
+    const isTouchDevice = navigator.maxTouchPoints > 0
+
+    if (isTouchDevice) {
+      // Mobile: no save dialog, download starts immediately — just show done after short delay
+      setTimeout(() => {
+        setStatus('done')
+        setTimeout(() => setStatus('idle'), 2500)
+      }, 1500)
+      return
+    }
+
+    // Desktop: detect if user cancelled the save-as dialog via blur/focus timing
     let blurTime: number | null = null
 
     const cleanup = () => {
@@ -29,7 +42,6 @@ export default function ResumeButton() {
     const onFocus = () => {
       cleanup()
       const elapsed = blurTime ? Date.now() - blurTime : 9999
-      // If user returned from dialog very quickly (<= 2s), treat as cancelled
       const wasCancelled = blurTime !== null && elapsed <= 2000
       setStatus(wasCancelled ? 'cancelled' : 'done')
       setTimeout(() => setStatus('idle'), 2500)
@@ -38,7 +50,7 @@ export default function ResumeButton() {
     window.addEventListener('blur', onBlur)
     window.addEventListener('focus', onFocus)
 
-    // Fallback for browsers that download silently (no dialog), or mobile
+    // Fallback: if browser downloads without showing a dialog (silent download)
     setTimeout(() => {
       if (blurTime === null) {
         cleanup()
@@ -145,7 +157,6 @@ export default function ResumeButton() {
           transition: all 0.4s ease;
         }
 
-        /* Loading state */
         .resume-label.loading {
           width: 57px;
         }
@@ -174,11 +185,9 @@ export default function ResumeButton() {
           visibility: hidden;
         }
 
-        /* Done state */
         .resume-label.done {
           width: 150px;
           border-color: rgb(35, 174, 35);
-          animation: none;
         }
 
         .resume-label.done .resume-circle {
@@ -187,37 +196,15 @@ export default function ResumeButton() {
           rotate: 0deg;
         }
 
-        .resume-label.done .resume-circle::before {
-          height: 0;
-          animation: none;
-        }
+        .resume-label.done .resume-circle::before { height: 0; animation: none; }
+        .resume-label.done .resume-circle .resume-square { opacity: 0; visibility: hidden; }
+        .resume-label.done .resume-circle .resume-icon { opacity: 1; visibility: visible; }
+        .resume-label.done .resume-title.primary { opacity: 0; visibility: hidden; }
+        .resume-label.done .resume-title.secondary { opacity: 1; visibility: visible; color: rgb(35, 174, 35); }
 
-        .resume-label.done .resume-circle .resume-icon {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        .resume-label.done .resume-circle .resume-square {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        .resume-label.done .resume-title.primary {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        .resume-label.done .resume-title.secondary {
-          opacity: 1;
-          visibility: visible;
-          color: rgb(35, 174, 35);
-        }
-
-        /* Cancelled state */
         .resume-label.cancelled {
           width: 150px;
           border-color: rgb(239, 68, 68);
-          animation: none;
         }
 
         .resume-label.cancelled .resume-circle {
@@ -226,31 +213,11 @@ export default function ResumeButton() {
           rotate: 0deg;
         }
 
-        .resume-label.cancelled .resume-circle::before {
-          height: 0;
-          animation: none;
-        }
-
-        .resume-label.cancelled .resume-circle .resume-icon {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        .resume-label.cancelled .resume-circle .resume-square {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        .resume-label.cancelled .resume-title.primary {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        .resume-label.cancelled .resume-title.secondary {
-          opacity: 1;
-          visibility: visible;
-          color: rgb(239, 68, 68);
-        }
+        .resume-label.cancelled .resume-circle::before { height: 0; animation: none; }
+        .resume-label.cancelled .resume-circle .resume-square { opacity: 0; visibility: hidden; }
+        .resume-label.cancelled .resume-circle .resume-icon { opacity: 1; visibility: visible; }
+        .resume-label.cancelled .resume-title.primary { opacity: 0; visibility: hidden; }
+        .resume-label.cancelled .resume-title.secondary { opacity: 1; visibility: visible; color: rgb(239, 68, 68); }
 
         @keyframes resume-pulse {
           0% { scale: 0.95; box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
