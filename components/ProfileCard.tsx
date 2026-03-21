@@ -1,6 +1,7 @@
 'use client'
 
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import ResumeButton from './ResumeButton'
 
 interface ProfileCardProps {
   enlarged?: boolean
@@ -261,12 +262,7 @@ export default function ProfileCard({ enlarged = false }: ProfileCardProps) {
               </a>
             </div>
 
-            <div className="view-more">
-              <button className="view-more-button">Connect</button>
-              <svg className="arrow-svg" viewBox="0 0 15 15">
-                <path d="M8 3L12 7.5L8 12M2 7.5H12" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
+            <ResumeButton />
           </div>
         </div>
       </div>

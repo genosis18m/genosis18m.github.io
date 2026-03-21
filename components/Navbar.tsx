@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { FiGithub, FiLinkedin, FiMenu, FiX } from 'react-icons/fi'
 import ThemeToggle from '@/components/ThemeToggle'
-import ResumeButton from './ResumeButton'
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -100,27 +99,20 @@ export default function Navbar() {
       `}</style>
 
       <div className="section-container">
-        <div className="flex items-center justify-between h-16 w-full">
-          {/* Logo & Resume Block */}
-          <div className="flex items-center gap-6">
-            <a
-              href="#home"
-              className="flex items-center justify-center overflow-hidden rounded-full border-2 border-transparent hover:border-[#8B5CF6] transition-all duration-300"
-              style={{ width: '40px', height: '40px', background: 'var(--bg-card)' }}
-              title="Home"
-            >
-              <img 
-                src="/avatar.jpg" 
-                alt="Avatar" 
-                className="w-full h-full object-cover"
-              />
-            </a>
-            
-            {/* Download Resume Component */}
-            <div className="hidden sm:block">
-              <ResumeButton />
-            </div>
-          </div>
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <a
+            href="#home"
+            className="flex items-center justify-center overflow-hidden rounded-full border-2 border-transparent hover:border-[#8B5CF6] transition-all duration-300"
+            style={{ width: '40px', height: '40px', background: 'var(--bg-card)' }}
+            title="Home"
+          >
+            <img 
+              src="/avatar.jpg" 
+              alt="Avatar" 
+              className="w-full h-full object-cover"
+            />
+          </a>
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
