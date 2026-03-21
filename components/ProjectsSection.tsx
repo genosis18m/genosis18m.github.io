@@ -273,6 +273,23 @@ export default function ProjectsSection() {
                     </span>
                   </div>
                 </a>
+
+                {active.live && (
+                  <a
+                    href={active.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 mt-4 text-sm font-semibold transition-all duration-300 hover:scale-105 w-fit px-4 py-2 rounded-lg"
+                    style={{
+                      background: `${active.accentColor}1A`,
+                      color: active.accentColor,
+                      border: `1px solid ${active.accentColor}44`,
+                    }}
+                  >
+                    <FiGlobe size={15} />
+                    Live Demo
+                  </a>
+                )}
               </div>
 
               {/* Project number indicator */}
