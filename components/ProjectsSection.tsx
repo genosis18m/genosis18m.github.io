@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { FiGithub, FiExternalLink, FiGlobe, FiShield, FiHeart, FiMusic } from 'react-icons/fi'
+import { FiGithub, FiGlobe } from 'react-icons/fi'
 import { FaServer, FaCamera, FaHospital, FaWaveSquare, FaSpaceShuttle } from 'react-icons/fa'
 
 interface Project {
@@ -16,6 +16,10 @@ interface Project {
   github: string
   live?: string
   accentColor: string
+  emoji?: string
+  headerPattern?: string
+  headerPatternSize?: string
+  headerGlow?: string
 }
 
 const projects: Project[] = [
@@ -50,7 +54,34 @@ const projects: Project[] = [
     color: 'from-blue-600 to-cyan-500',
     accentColor: '#3B82F6',
     github: 'https://github.com/genosis18m/Metaverse_go',
-    live: 'https://metaverse-frontend-production-3803.up.railway.app/',
+    live: 'https://go-metaverse.vercel.app/',
+  },
+  {
+    id: 'golf-fego',
+    title: 'Golf Charity Draw Platform',
+    shortTitle: 'GOLf-fego',
+    icon: (
+      <span aria-hidden="true" className="inline-block leading-none">
+        ⛳
+      </span>
+    ),
+    tagline: 'Subscription-powered charity draws with member and admin workflows',
+    description: [
+      'Built a full-stack web application using Next.js 16, React 19, TypeScript, Tailwind CSS, Supabase, Stripe, and Vercel, delivering responsive public pages, user onboarding, a member dashboard, and an admin portal with authentication and role-based access control.',
+      'Implemented REST API routes, Supabase database and storage integration, Stripe subscription billing and webhook handling, score tracking, charity selection, and profile management for a production-ready member experience.',
+      'Designed a custom prize-draw workflow that enabled end-to-end subscription and draw management across the public site, protected dashboard flows, and operational admin tooling.',
+    ],
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Stripe', 'Vercel'],
+    color: 'from-emerald-600 via-lime-500 to-teal-500',
+    accentColor: '#84CC16',
+    github: 'https://github.com/genosis18m/golf-subscription-charity-platform',
+    live: 'https://golf-subscription-charity-platform.vercel.app/',
+    emoji: '🏌️',
+    headerPattern:
+      'radial-gradient(circle at 18% 28%, rgba(255,255,255,0.28) 0 2px, transparent 2.5px), radial-gradient(circle at 76% 20%, rgba(255,255,255,0.22) 0 2px, transparent 2.5px), linear-gradient(135deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 75%, transparent 75%, transparent)',
+    headerPatternSize: '34px 34px, 42px 42px, 110px 110px',
+    headerGlow:
+      'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.28), transparent 34%), radial-gradient(circle at 85% 78%, rgba(132,204,22,0.28), transparent 40%)',
   },
   {
     id: 'hair',
@@ -107,6 +138,13 @@ export default function ProjectsSection() {
   const [activeTab, setActiveTab] = useState(projects[0].id)
 
   const active = projects.find((p) => p.id === activeTab)!
+  const headerPattern =
+    active.headerPattern ??
+    'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.9) 1px, transparent 1px), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.85) 1px, transparent 1px)'
+  const headerPatternSize = active.headerPatternSize ?? '40px 40px'
+  const headerGlow =
+    active.headerGlow ??
+    'linear-gradient(135deg, rgba(255,255,255,0.12), transparent 60%)'
 
   return (
     <section id="projects" className="py-24 relative" style={{ background: 'var(--bg-section)' }}>
@@ -182,12 +220,16 @@ export default function ProjectsSection() {
           <div
             className={`bg-gradient-to-r ${active.color} p-5 sm:p-8 md:p-12 relative overflow-hidden`}
           >
+            <div
+              className="absolute inset-0 opacity-80"
+              style={{ backgroundImage: headerGlow }}
+            />
             {/* Background pattern */}
             <div
               className="absolute inset-0 opacity-10"
               style={{
-                backgroundImage: `radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px)`,
-                backgroundSize: '40px 40px',
+                backgroundImage: headerPattern,
+                backgroundSize: headerPatternSize,
               }}
             />
             {/* Giant Watermark Icon */}
@@ -196,6 +238,12 @@ export default function ProjectsSection() {
             </div>
             
             <div className="relative z-10 flex flex-col justify-start gap-2">
+              {active.emoji && (
+                <div className="mb-2 inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-sm font-semibold text-white/95 backdrop-blur-md shadow-lg">
+                  <span aria-hidden="true">{active.emoji}</span>
+                  <span>Featured Build</span>
+                </div>
+              )}
               <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-3xl shadow-lg border border-white/20 mb-4 drop-shadow-md">
                 {active.icon}
               </div>
