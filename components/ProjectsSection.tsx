@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { FiGithub, FiGlobe } from 'react-icons/fi'
-import { FaServer, FaCamera, FaHospital, FaWaveSquare, FaSpaceShuttle } from 'react-icons/fa'
+import { FaServer, FaCamera, FaHospital, FaWaveSquare, FaSpaceShuttle, FaRobot } from 'react-icons/fa'
 
 interface Project {
   id: string
@@ -23,6 +23,29 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    id: 'autoconf',
+    title: 'AutoConf — AI Conference Planner',
+    shortTitle: 'AutoConf AI',
+    icon: <FaRobot />,
+    tagline: '7 AI agents plan an entire conference in minutes',
+    description: [
+      'Built a fully autonomous conference planning platform powered by 7 specialized AI agents (Sponsor Research, Speaker Curation, Ticketing, Venue Selection, Pricing, GTM, and Ops) running concurrently via an async FastAPI orchestrator with real-time WebSocket streaming.',
+      'Integrated Groq (LLaMA 3), Google Gemini, Tavily AI Search, and Google Places API to deliver production-ready conference plans — sponsors with outreach emails, speaker lineups, revenue forecasts, and a complete run-of-show — all in under 60 seconds.',
+      'Shipped a full-stack React + TypeScript frontend with a live agent dashboard, tabbed results view, PDF export via ReportLab, and a zero-backend demo mode (pre-cached data bundled in the frontend) deployed on Vercel.',
+    ],
+    tech: ['FastAPI', 'React', 'TypeScript', 'Groq', 'Gemini', 'Tavily', 'Google Places API', 'Supabase', 'WebSockets', 'ReportLab', 'Vite', 'Zustand'],
+    color: 'from-amber-500 via-orange-500 to-rose-500',
+    accentColor: '#F59E0B',
+    github: 'https://github.com/genosis18m/AutoConf-multiAgents',
+    live: 'https://auto-conf-multi-agents.vercel.app',
+    emoji: '🤖',
+    headerPattern:
+      'radial-gradient(circle at 25% 35%, rgba(255,255,255,0.18) 0 2px, transparent 2.5px), radial-gradient(circle at 70% 15%, rgba(255,255,255,0.14) 0 2px, transparent 2.5px), linear-gradient(60deg, rgba(255,255,255,0.06) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.06) 75%, transparent 75%, transparent)',
+    headerPatternSize: '30px 30px, 48px 48px, 90px 90px',
+    headerGlow:
+      'radial-gradient(circle at 10% 15%, rgba(255,255,255,0.32), transparent 40%), radial-gradient(circle at 90% 80%, rgba(245,158,11,0.3), transparent 45%)',
+  },
   {
     id: 'medical',
     title: 'Medical Appointment System',
