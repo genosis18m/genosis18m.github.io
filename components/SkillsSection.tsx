@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { FaCode, FaBrain, FaGlobe, FaCubes } from 'react-icons/fa'
 
 const skillGroups = [
@@ -7,31 +8,108 @@ const skillGroups = [
     category: 'Languages',
     icon: <FaCode />,
     color: '#3B82F6',
+    colorB: '#22D3EE',
     skills: ['Go', 'TypeScript', 'JavaScript', 'Python', 'SQL', 'Bash', 'LaTeX'],
   },
   {
     category: 'AI / ML',
     icon: <FaBrain />,
     color: '#8B5CF6',
+    colorB: '#3B82F6',
     skills: ['LangChain', 'PyTorch', 'TensorFlow', 'Scikit-learn', 'OpenCV', 'YOLO', 'RAG'],
   },
   {
     category: 'Full Stack',
     icon: <FaGlobe />,
     color: '#10B981',
+    colorB: '#22D3EE',
     skills: ['Next.js', 'React', 'Node.js', 'Flask', 'Streamlit', 'Gin', 'FastAPI'],
   },
   {
     category: 'DevOps',
     icon: <FaCubes />,
     color: '#F97316',
+    colorB: '#FBBF24',
     skills: ['Git', 'Docker', 'Linux', 'Redis', 'Postman', 'CI/CD'],
   },
 ]
 
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 32 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+}
+
 export default function SkillsSection() {
   return (
     <section id="skills" className="py-24 relative" style={{ background: 'var(--bg-section)' }}>
+      <style>{`
+        .skillv2-card {
+          background: var(--bg-card);
+          border: 1px solid var(--bg-card-border);
+          border-radius: 1.25rem;
+          padding: 1.5rem;
+          box-shadow: 0 4px 24px var(--shadow);
+          position: relative;
+          overflow: hidden;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .skillv2-card::after {
+          content: '';
+          position: absolute;
+          inset: auto 0 0 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, var(--accent-a), var(--accent-b), transparent);
+          opacity: 0.35;
+          transition: opacity 0.35s ease;
+        }
+        .skillv2-card:hover {
+          border-color: color-mix(in srgb, var(--accent-a) 40%, transparent);
+          box-shadow: 0 12px 40px var(--shadow), 0 0 40px color-mix(in srgb, var(--accent-a) 12%, transparent);
+        }
+        .skillv2-card:hover::after { opacity: 1; }
+
+        .skillv2-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 14px;
+          display: grid;
+          place-content: center;
+          font-size: 22px;
+          color: var(--accent-a);
+          background: color-mix(in srgb, var(--accent-a) 10%, transparent);
+          border: 1px solid color-mix(in srgb, var(--accent-a) 25%, transparent);
+          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .skillv2-card:hover .skillv2-icon {
+          transform: scale(1.08) rotate(-4deg);
+        }
+
+        .skillv2-chip {
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          padding: 5px 10px;
+          border-radius: 8px;
+          color: var(--accent-a);
+          background: color-mix(in srgb, var(--accent-a) 9%, transparent);
+          border: 1px solid color-mix(in srgb, var(--accent-a) 26%, transparent);
+          transition: transform 0.25s ease, background 0.25s ease;
+          cursor: default;
+        }
+        .skillv2-chip:hover {
+          transform: translateY(-2px);
+          background: color-mix(in srgb, var(--accent-a) 16%, transparent);
+        }
+      `}</style>
+
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -41,7 +119,13 @@ export default function SkillsSection() {
 
       <div className="section-container relative z-10">
         {/* Header */}
-        <div className="mb-16 text-center">
+        <motion.div
+          className="mb-14 text-center"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <p
             className="text-xs font-display font-semibold tracking-[0.3em] uppercase mb-4"
             style={{ color: '#10B981' }}
@@ -64,57 +148,40 @@ export default function SkillsSection() {
               Skills
             </span>
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 max-w-5xl mx-auto">
-          {skillGroups.map((group, groupIdx) => (
-            <div
-              key={group.category}
-              className="skill-card group"
-              style={{
-                background: 'var(--bg-card)',
-                border: `1px solid ${group.color}22`,
-                animationDelay: `${groupIdx * 0.1}s`,
-              }}
-            >
-              {/* Heading (First Content) */}
-              <div className="skill-first-content p-6">
-                <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl mb-2 drop-shadow-md"
-                  style={{ background: 'transparent', color: group.color }}
-                >
-                  {group.icon}
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {skillGroups.map((group) => (
+            <motion.div key={group.category} variants={item} whileHover={{ y: -6 }}>
+              <div
+                className="skillv2-card"
+                style={{ '--accent-a': group.color, '--accent-b': group.colorB } as React.CSSProperties}
+              >
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="skillv2-icon">{group.icon}</div>
+                  <h3
+                    className="font-display font-black text-lg"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    {group.category}
+                  </h3>
                 </div>
-                <h3
-                  className="font-display font-black text-2xl text-center tracking-wide"
-                  style={{ color: group.color }}
-                >
-                  {group.category}
-                </h3>
-              </div>
 
-              {/* Detailing (Second Content) */}
-              <div className="skill-second-content p-4" style={{ background: 'var(--bg-card-hover)' }}>
-                <div className="flex flex-wrap gap-2 justify-center content-center w-full h-full">
-                  {group.skills.map((skill, i) => (
-                    <span
-                      key={skill}
-                      className="px-2.5 py-1.5 text-[11px] uppercase font-bold tracking-wider rounded-md transition-all duration-300 hover:scale-105 cursor-default text-blue-200 bg-blue-900 border border-blue-500/40 shadow shadow-blue-900/50"
-                    >
-                      {skill}
-                    </span>
+                <div className="flex flex-wrap gap-2">
+                  {group.skills.map((skill) => (
+                    <span key={skill} className="skillv2-chip">{skill}</span>
                   ))}
                 </div>
               </div>
-
-              {/* Bottom accent line */}
-              <div
-                className="absolute bottom-0 left-0 w-full h-1 opacity-30 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ background: `linear-gradient(90deg, transparent, ${group.color}, transparent)` }}
-              />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

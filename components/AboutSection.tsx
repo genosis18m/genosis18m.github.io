@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 const education = {
   institution: 'Indian Institute of Technology Roorkee',
@@ -10,169 +11,47 @@ const education = {
   coursework: ['Probability & Statistics', 'Linear Algebra', 'Calculus', 'Data Structures & Algorithms', 'Machine Learning', 'Data Science'],
 }
 
-const positions = [
-  {
-    role: 'Head of Dev',
-    org: 'Student Technical Council',
-    orgFull: 'Student Technical Council (STC), IIT Roorkee',
-    period: 'Jan 2026 – Present',
-    color: '#8B5CF6',
-    logo: '/images/stc-logo.jpg',
-    points: [
-      'Leading the technical development wing of STC',
-      'Overseeing campus-wide software projects',
-      'Mentoring junior student developers',
-      'Establishing code quality standards',
-    ],
-  },
-  {
-    role: 'Secretary',
-    org: 'Eco Group',
-    orgFull: 'Eco Group, IIT Roorkee',
-    period: 'Aug 2025 – Present',
-    color: '#10B981',
-    logo: '/images/eco_iitr_logo.jpeg',
-    points: [
-      'Spearheading campus sustainability initiatives',
-      'Leading solar-energy and green projects',
-      'Coordinating NGO collaborations',
-      'Managing volunteer teams of 30+ members',
-    ],
-  },
-  {
-    role: 'Joint Secretary',
-    org: 'Comedy Club',
-    orgFull: 'Comedy Club, IIT Roorkee',
-    period: 'Aug 2025 – Present',
-    color: '#F97316',
-    logo: '/images/stand-up-logo.jpeg',
-    points: [
-      'Managing club operations & logistics',
-      'Scheduling cultural performances & events',
-      'Facilitating comedy workshops',
-      'Hosting open-mic sessions',
-    ],
-  },
+const facts = [
+  { emoji: '📍', label: 'Roorkee, India' },
+  { emoji: '⚡', label: 'Go & TypeScript' },
+  { emoji: '🤖', label: 'Agentic AI' },
+  { emoji: '🎌', label: 'Anime & Manga' },
+  { emoji: '☕', label: 'Coffee-powered' },
 ]
+
+const stats = [
+  { value: '7+', label: 'Projects shipped', color: '#8B5CF6' },
+  { value: '2', label: 'Internships', color: '#22D3EE' },
+  { value: '3', label: 'Leadership roles', color: '#F97316' },
+  { value: '25+', label: 'Technologies', color: '#10B981' },
+]
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+}
 
 export default function AboutSection() {
   return (
     <section id="about" className="py-24 relative" style={{ background: 'var(--bg-section)' }}>
       <style>{`
-        /* ── Uiverse position card ── */
-        .pos-uiverse-card {
-          --card-font: var(--text-primary);
-          --card-font-sub: var(--text-secondary);
-          --card-bg: var(--bg-card);
-          --card-main: var(--paint-purple);
-          flex: 1 1 260px;
-          max-width: 380px;
-          min-width: 220px;
-          height: auto;
-          min-height: 220px;
-          background: var(--card-bg);
-          border: 2px solid var(--card-main);
-          box-shadow: 4px 4px var(--card-main);
-          border-radius: 10px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          padding: 24px 20px 20px;
-          gap: 10px;
-          transition: transform 0.2s, box-shadow 0.2s;
-          cursor: default;
-          position: relative;
-        }
-        .pos-uiverse-card:hover {
-          transform: translate(-2px, -2px);
-          box-shadow: 6px 6px var(--card-main);
-        }
-
-        .pos-card-logo {
-          width: 72px;
-          height: 72px;
-          border-radius: 50%;
-          overflow: hidden;
-          border: 3px solid var(--card-main);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(139,92,246,0.08);
-          flex-shrink: 0;
-        }
-
-        .pos-card-title {
-          text-align: center;
-          color: var(--text-primary);
-          font-size: 18px;
-          font-weight: 800;
-          font-family: var(--font-nunito), sans-serif;
-          line-height: 1.2;
-        }
-        .pos-card-title span {
-          display: block;
-          font-size: 12px;
-          color: var(--text-secondary);
-          font-weight: 500;
-          margin-top: 3px;
-        }
-
-        .pos-card-points {
-          display: flex;
-          flex-direction: column;
-          max-height: 0;
-          opacity: 0;
-          overflow: hidden;
-          gap: 5px;
-          transition: opacity 0.4s ease, max-height 0.5s ease;
-          width: 100%;
-        }
-        .pos-uiverse-card:hover .pos-card-points {
-          opacity: 1;
-          max-height: 200px;
-        }
-        .pos-card-point {
-          display: flex;
-          align-items: flex-start;
-          gap: 6px;
-          font-size: 12px;
-          font-family: var(--font-nunito), sans-serif;
-          color: var(--text-secondary);
-          line-height: 1.4;
-        }
-        .pos-card-point-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          flex-shrink: 0;
-          margin-top: 4px;
-        }
-
-        /* stagger in */
-        @keyframes slideInCard {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .pos-stagger {
-          opacity: 0;
-          animation: slideInCard 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
-          display: flex;
-          flex: 1 1 260px;
-          max-width: 380px;
-        }
-        .pos-stagger:nth-child(1) { animation-delay: 0.1s; }
-        .pos-stagger:nth-child(2) { animation-delay: 0.25s; }
-        .pos-stagger:nth-child(3) { animation-delay: 0.4s; }
-
-        /* About bio/edu cards */
         .about-card {
           background: var(--bg-card);
           border: 1px solid var(--bg-card-border);
-          border-radius: 1rem;
+          border-radius: 1.25rem;
           padding: 2rem;
-          transition: background 0.3s;
           box-shadow: 0 4px 20px var(--shadow);
+          height: 100%;
+          transition: border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .about-card:hover {
+          border-color: rgba(139, 92, 246, 0.3);
+          box-shadow: 0 12px 40px var(--shadow), 0 0 40px rgba(139, 92, 246, 0.08);
         }
         .about-badge {
           background: var(--bg-badge);
@@ -183,6 +62,33 @@ export default function AboutSection() {
           font-size: 12px;
           font-family: var(--font-nunito), sans-serif;
         }
+        .about-fact {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 6px 14px;
+          border-radius: 999px;
+          font-size: 12.5px;
+          font-weight: 600;
+          font-family: var(--font-nunito), sans-serif;
+          color: var(--text-secondary);
+          background: var(--bg-badge);
+          border: 1px solid var(--bg-card-border);
+          transition: border-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+          cursor: default;
+        }
+        .about-fact:hover {
+          border-color: rgba(139, 92, 246, 0.45);
+          color: var(--text-primary);
+          transform: translateY(-2px);
+        }
+        .about-highlight {
+          font-weight: 600;
+          background-size: 100% 2px;
+          background-repeat: no-repeat;
+          background-position: 0 100%;
+          padding-bottom: 2px;
+        }
       `}</style>
 
       <div
@@ -191,9 +97,14 @@ export default function AboutSection() {
       />
 
       <div className="section-container relative z-10">
-
         {/* Header */}
-        <div className="mb-12 text-center">
+        <motion.div
+          className="mb-14 text-center"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <p className="text-xs font-semibold tracking-[0.3em] uppercase mb-4" style={{ color: 'var(--paint-orange)' }}>
             Background
           </p>
@@ -208,29 +119,76 @@ export default function AboutSection() {
               Me
             </span>
           </h2>
-        </div>
+        </motion.div>
 
-        {/* Row 1: Bio + Education */}
-        <div className="grid sm:grid-cols-2 gap-6 mb-14">
-
+        {/* Bio + Education */}
+        <motion.div
+          className="grid lg:grid-cols-5 gap-6 mb-6"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {/* Bio */}
-          <div className="about-card h-full">
-            <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              3rd-year student at <strong style={{ color: 'var(--text-primary)' }}>IIT Roorkee</strong>, studying Materials Engineering — though most of my time goes into building software, not studying it.
-              I got into development because I genuinely enjoy the craft: turning ideas into real, working things.
-              I gravitate toward{' '}
-              <span style={{ color: 'var(--paint-purple)' }}>AI systems</span>,{' '}
-              <span style={{ color: 'var(--paint-blue)' }}>high-performance backends</span>, and anything that pushes what software can do.
-              Outside of code, I&apos;m deep into{' '}
-              <span style={{ color: 'var(--paint-orange)' }}>anime and manga</span> — the kind of storytelling that makes you think.
-            </p>
-          </div>
+          <motion.div className="lg:col-span-3" variants={item}>
+            <div className="about-card flex flex-col justify-center">
+              <p
+                className="font-black mb-5 leading-tight"
+                style={{
+                  fontSize: 'clamp(1.4rem, 3vw, 2rem)',
+                  fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
+                  color: 'var(--text-primary)',
+                }}
+              >
+                I turn ideas into{' '}
+                <span style={{
+                  background: 'linear-gradient(120deg, #8B5CF6, #3B82F6, #22D3EE)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}>
+                  working software
+                </span>
+                .
+              </p>
+              <p className="text-base leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
+                3rd-year student at <strong style={{ color: 'var(--text-primary)' }}>IIT Roorkee</strong>, studying
+                Materials Engineering — though most of my time goes into building software, not studying it.
+                I got into development because I genuinely enjoy the craft, and I gravitate toward{' '}
+                <span className="about-highlight" style={{ color: 'var(--paint-purple)', backgroundImage: 'linear-gradient(90deg, var(--paint-purple), transparent)' }}>
+                  AI systems
+                </span>,{' '}
+                <span className="about-highlight" style={{ color: 'var(--paint-blue)', backgroundImage: 'linear-gradient(90deg, var(--paint-blue), transparent)' }}>
+                  high-performance backends
+                </span>, and anything that pushes what software can do.
+              </p>
+              <p className="text-base leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>
+                Outside of code, I&apos;m deep into{' '}
+                <span className="about-highlight" style={{ color: 'var(--paint-orange)', backgroundImage: 'linear-gradient(90deg, var(--paint-orange), transparent)' }}>
+                  anime and manga
+                </span>{' '}
+                — the kind of storytelling that makes you think.
+              </p>
+
+              {/* Fact chips */}
+              <div className="flex flex-wrap gap-2">
+                {facts.map((fact) => (
+                  <span key={fact.label} className="about-fact">
+                    <span aria-hidden="true">{fact.emoji}</span>
+                    {fact.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
 
           {/* Education */}
-          <div className="about-card h-full" style={{ borderColor: 'rgba(139,92,246,0.2)' }}>
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center"
-                style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)' }}>
+          <motion.div className="lg:col-span-2" variants={item} whileHover={{ y: -4 }}>
+            <div className="about-card" style={{ borderColor: 'rgba(139,92,246,0.2)' }}>
+              <div
+                className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center mb-5"
+                style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)' }}
+              >
                 <Image
                   src="/images/indian-institute-of-technology-roorkee-logo.png"
                   alt="IIT Roorkee"
@@ -239,67 +197,61 @@ export default function AboutSection() {
                   unoptimized
                 />
               </div>
-              <div>
-                <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{education.institution}</h3>
-                <p className="text-sm mt-1" style={{ color: 'var(--paint-purple)' }}>{education.degree}</p>
-                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                  {education.period} · {education.location}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {education.coursework.map((course) => (
-                    <span key={course} className="about-badge">{course}</span>
-                  ))}
-                </div>
+              <p className="text-[11px] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: 'var(--paint-purple)' }}>
+                Education
+              </p>
+              <h3 className="font-bold text-lg leading-snug" style={{ color: 'var(--text-primary)' }}>
+                {education.institution}
+              </h3>
+              <p className="text-sm mt-1" style={{ color: 'var(--paint-purple)' }}>{education.degree}</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                {education.period} · {education.location}
+              </p>
+              <div className="flex flex-wrap gap-2 mt-5">
+                {education.coursework.map((course) => (
+                  <span key={course} className="about-badge">{course}</span>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Row 2: Positions of Responsibility — Uiverse cards, full width, responsive */}
-        <div>
-          <h3 className="font-semibold text-sm tracking-widest uppercase mb-8 text-center"
-            style={{ color: 'var(--text-label)' }}>
-            Positions of Responsibility
-          </h3>
-
-          {/* flex-wrap: stacks vertically on small screens, horizontal row on large */}
-          <div className="flex flex-wrap justify-center gap-6 w-full">
-            {positions.map((pos) => (
-              <div key={pos.role} className="pos-stagger">
-                <div className="pos-uiverse-card w-full" style={{ borderColor: pos.color, boxShadow: `4px 4px ${pos.color}` }}>
-                  {/* Logo */}
-                  <div className="pos-card-logo" style={{ borderColor: pos.color }}>
-                    <Image
-                      src={pos.logo}
-                      alt={pos.org}
-                      width={72} height={72}
-                      className="w-full h-full object-cover"
-                      unoptimized
-                    />
-                  </div>
-
-                  {/* Title */}
-                  <div className="pos-card-title">
-                    {pos.role}
-                    <span>{pos.org}</span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '11px' }}>{pos.period}</span>
-                  </div>
-
-                  {/* Bullet points on hover */}
-                  <div className="pos-card-points">
-                    {pos.points.map((point, i) => (
-                      <div key={i} className="pos-card-point">
-                        <span className="pos-card-point-dot" style={{ backgroundColor: pos.color }} />
-                        {point}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
+        {/* Stat row */}
+        <motion.div
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+        >
+          {stats.map((stat) => (
+            <motion.div
+              key={stat.label}
+              variants={item}
+              whileHover={{ y: -4 }}
+              className="rounded-2xl px-6 py-5 text-center"
+              style={{
+                background: 'var(--bg-card)',
+                border: '1px solid var(--bg-card-border)',
+                boxShadow: '0 4px 20px var(--shadow)',
+              }}
+            >
+              <p
+                className="font-black"
+                style={{
+                  fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
+                  fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
+                  color: stat.color,
+                }}
+              >
+                {stat.value}
+              </p>
+              <p className="text-xs font-semibold tracking-wide uppercase mt-1" style={{ color: 'var(--text-muted)' }}>
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   )

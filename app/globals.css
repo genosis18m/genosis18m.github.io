@@ -99,8 +99,13 @@ body {
   background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #8B5CF6, #3B82F6);
+  background: linear-gradient(180deg, #8B5CF6, #3B82F6, #22D3EE);
   border-radius: 3px;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: var(--text-primary);
 }
 
 
@@ -161,6 +166,68 @@ body {
   animation: borderGlow 3s ease-in-out infinite;
 }
 
+/* Scroll-reveal (used with IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+  .hero-aurora {
+    animation: none !important;
+  }
+}
+
+/* Hero aurora blobs — no blur filter (gradients are already soft),
+   transform-only drift so the layer stays composited and cheap */
+@keyframes auroraDrift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(6vw, 5vh, 0) scale(1.18); }
+}
+.hero-aurora {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+.hero-aurora-1 {
+  width: 52vw;
+  height: 52vw;
+  max-width: 660px;
+  max-height: 660px;
+  left: -12%;
+  top: -18%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.16) 0%, rgba(139, 92, 246, 0.06) 40%, transparent 68%);
+  animation: auroraDrift 18s ease-in-out infinite alternate;
+}
+.hero-aurora-2 {
+  width: 42vw;
+  height: 42vw;
+  max-width: 540px;
+  max-height: 540px;
+  right: -10%;
+  bottom: -12%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.11) 0%, rgba(34, 211, 238, 0.04) 40%, transparent 68%);
+  animation: auroraDrift 24s ease-in-out infinite alternate-reverse;
+}
+[data-theme="light"] .hero-aurora-1 {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.10) 0%, rgba(124, 58, 237, 0.04) 40%, transparent 68%);
+}
+[data-theme="light"] .hero-aurora-2 {
+  background: radial-gradient(circle, rgba(8, 145, 178, 0.08) 0%, rgba(8, 145, 178, 0.03) 40%, transparent 68%);
+}
+
 /* Glass morphism */
 .glass {
   background: var(--bg-card);
@@ -206,10 +273,6 @@ body {
   .section-container {
     padding: 0 1rem;
   }
-  /* Skill cards: 2 columns on mobile, fixed smaller height so they fit */
-  .skill-card {
-    height: 240px;
-  }
   /* Project tabs: allow scroll on mobile without hiding the bar */
   .ui-btn {
     --btn-padding: 10px 12px;
@@ -227,66 +290,6 @@ body {
   .resume-label.active {
     width: 50px;
   }
-}
-
-/* Skill Card - Uiverse styling */
-.skill-card {
-  width: 100%;
-  height: 280px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border-radius: 12px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-[data-theme="dark"] .skill-card {
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5);
-}
-
-.skill-card:hover {
-  border-radius: 15px;
-  cursor: pointer;
-  transform: scale(1.05);
-}
-
-.skill-first-content {
-  height: 100%;
-  width: 100%;
-  transition: all 0.4s;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 1;
-  border-radius: 15px;
-  gap: 1rem;
-}
-
-.skill-card:hover .skill-first-content {
-  height: 0px;
-  opacity: 0;
-  overflow: hidden;
-}
-
-.skill-second-content {
-  height: 0%;
-  width: 100%;
-  opacity: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  transition: all 0.4s;
-  transform: rotate(90deg) scale(-1);
-  overflow: hidden;
-}
-
-.skill-card:hover .skill-second-content {
-  opacity: 1;
-  height: 100%;
-  transform: rotate(0deg);
 }
 
 /* GitHub Button 3D Hover - Uiverse styling */

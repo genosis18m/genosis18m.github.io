@@ -75,7 +75,7 @@ export default function ContactSection() {
           style={{ borderColor: 'var(--divider)' }}
         >
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            © 2025 Mohit Adoni · Built with Next.js + TypeScript
+            © 2026 Mohit Adoni · Built with Next.js + TypeScript
           </p>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />

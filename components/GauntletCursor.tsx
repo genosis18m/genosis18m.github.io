@@ -21,6 +21,7 @@ export default function GauntletCursor() {
 
     document.getElementById('gc-root')?.remove()
     document.getElementById('gc-style')?.remove()
+    document.getElementById('gc-glow')?.remove()
 
     const style = document.createElement('style')
     style.id = 'gc-style'
@@ -37,9 +38,27 @@ export default function GauntletCursor() {
         display: block;
         filter: drop-shadow(0 2px 8px rgba(139,92,246,0.45));
       }
+      #gc-glow {
+        position: fixed; top: 0; left: 0;
+        width: 28px; height: 28px;
+        margin-left: -14px; margin-top: -14px;
+        border-radius: 50%;
+        pointer-events: none; z-index: 99997;
+        background: radial-gradient(circle, rgba(139,92,246,0.5), rgba(34,211,238,0.18) 55%, transparent 72%);
+        filter: blur(5px);
+        will-change: transform;
+        transition: opacity 0.15s ease;
+      }
       .gc-bubble {
         position: fixed; pointer-events: none;
         z-index: 99998; border-radius: 50%; opacity: 0;
+      }
+      .gc-ring {
+        position: fixed; pointer-events: none;
+        z-index: 99998; border-radius: 50%;
+        border: 2px solid rgba(139,92,246,0.85);
+        width: 14px; height: 14px;
+        opacity: 0;
       }
     `
     document.head.appendChild(style)
@@ -47,10 +66,15 @@ export default function GauntletCursor() {
     const wrap = document.createElement('div')
     wrap.id = 'gc-root'
 
+    const glow = document.createElement('div')
+    glow.id = 'gc-glow'
+    glow.style.opacity = '0'
+
     const canvas = document.createElement('canvas')
     canvas.width = SIZE
     canvas.height = SIZE
     wrap.appendChild(canvas)
+    document.body.appendChild(glow)
     document.body.appendChild(wrap)
 
     const ctx = canvas.getContext('2d')!
@@ -59,10 +83,14 @@ export default function GauntletCursor() {
     gif.src = '/gauntlet-2.gif'
 
     let mx = -400, my = -400, raf = 0
+    let gx = -400, gy = -400
+    let curScale = 1, targetScale = 1
     let snapping = false
     let snapEndTime = 0
     let gifReady = false
     let onScreen = false
+
+    const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, label, summary'
 
     const freezeFrame = () => {
       ctx.clearRect(0, 0, SIZE, SIZE)
@@ -80,20 +108,37 @@ export default function GauntletCursor() {
       my = e.clientY
       if (!onScreen) {
         onScreen = true
+        gx = mx
+        gy = my
         wrap.style.opacity = '1'
+        glow.style.opacity = '1'
       }
     }
 
     const onLeave = () => {
       onScreen = false
       wrap.style.opacity = '0'
+      glow.style.opacity = '0'
+    }
+
+    // Grow the gauntlet slightly over anything clickable
+    const onOver = (e: MouseEvent) => {
+      const el = e.target instanceof Element ? e.target : null
+      targetScale = el?.closest(INTERACTIVE) ? 1.22 : 1
     }
 
     window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('mouseover', onOver, { passive: true })
     document.addEventListener('mouseleave', onLeave)
 
     const tick = () => {
-      wrap.style.transform = `translate(${mx}px, ${my}px)`
+      curScale += (targetScale - curScale) * 0.18
+      wrap.style.transform = `translate(${mx}px, ${my}px) scale(${curScale.toFixed(3)})`
+
+      // Glow trails behind the gauntlet with a soft lag
+      gx += (mx - gx) * 0.16
+      gy += (my - gy) * 0.16
+      glow.style.transform = `translate(${gx.toFixed(1)}px, ${gy.toFixed(1)}px)`
 
       if (snapping && gifReady) {
         const now = performance.now()
@@ -115,12 +160,27 @@ export default function GauntletCursor() {
     const onDown = () => {
       if (!gifReady) return
 
+      // Press squash — the lerp in tick() eases it back to targetScale
+      curScale = 0.8
+
       gif.src = ''
       requestAnimationFrame(() => {
         gif.src = '/gauntlet-2.gif'
         snapping = true
         snapEndTime = performance.now() + 900
       })
+
+      // Snap shockwave ring
+      const ring = document.createElement('div')
+      ring.className = 'gc-ring'
+      ring.style.left = `${mx}px`
+      ring.style.top = `${my}px`
+      document.body.appendChild(ring)
+      ring.animate([
+        { transform: 'translate(-50%,-50%) scale(0.6)', opacity: 0.9, borderColor: 'rgba(139,92,246,0.9)' },
+        { transform: 'translate(-50%,-50%) scale(6)', opacity: 0, borderColor: 'rgba(34,211,238,0.4)' },
+      ], { duration: 520, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'forwards' })
+        .onfinish = () => ring.remove()
 
       for (let i = 0; i < 8; i++) {
         const b = document.createElement('div')
@@ -153,11 +213,13 @@ export default function GauntletCursor() {
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseover', onOver)
       window.removeEventListener('mousedown', onDown)
       document.removeEventListener('mouseleave', onLeave)
       wrap.remove()
+      glow.remove()
       style.remove()
-      document.querySelectorAll('.gc-bubble').forEach(b => b.remove())
+      document.querySelectorAll('.gc-bubble, .gc-ring').forEach(b => b.remove())
     }
   }, [])
 

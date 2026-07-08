@@ -43,6 +43,10 @@ export default function PaintHero() {
         }}
       />
 
+      {/* Drifting aurora glow */}
+      <div className="hero-aurora hero-aurora-1" />
+      <div className="hero-aurora hero-aurora-2" />
+
       {/* Hero text overlay */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center z-10"
@@ -61,12 +65,11 @@ export default function PaintHero() {
               letterSpacing: '-0.03em',
               fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
               background:
-                'linear-gradient(135deg, var(--text-primary) 0%, #8B5CF6 60%, #3B82F6 100%)',
+                'linear-gradient(120deg, var(--text-primary) 0%, #8B5CF6 45%, #3B82F6 70%, #22D3EE 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              filter:
-                'drop-shadow(0 0 40px rgba(139,92,246,0.25)) drop-shadow(0 0 80px rgba(59,130,246,0.1))',
+              filter: 'drop-shadow(0 0 40px rgba(139,92,246,0.25))',
             }}
           >
             Mohit Adoni
@@ -151,9 +154,9 @@ export default function PaintHero() {
               className="px-8 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-300 hover:scale-105"
               style={{
                 fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
-                background: 'linear-gradient(135deg, #8B5CF6, #3B82F6)',
+                background: 'linear-gradient(135deg, #8B5CF6, #3B82F6 70%, #22D3EE)',
                 color: 'white',
-                boxShadow: '0 0 30px rgba(139,92,246,0.4)',
+                boxShadow: '0 0 30px rgba(139,92,246,0.4), 0 0 60px rgba(34,211,238,0.15)',
               }}
             >
               View Projects
