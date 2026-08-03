@@ -8,10 +8,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-nunito)', 'var(--font-inter)', 'sans-serif'],
-        display: ['var(--font-playfair)', 'Georgia', 'serif'],
-        mono: ['var(--font-space-grotesk)', 'monospace'],
-        cartoon: ['var(--font-nunito)', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Helvetica Neue', 'sans-serif'],
+        display: ['var(--font-sans)', 'Helvetica Neue', 'sans-serif'],
+        serif: ['var(--font-serif)', 'Times New Roman', 'serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       colors: {
         paint: {

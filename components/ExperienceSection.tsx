@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { FiExternalLink, FiMapPin, FiCalendar } from 'react-icons/fi'
+import SectionHeading from '@/components/SectionHeading'
 
 const experiences = [
   {
@@ -152,19 +153,17 @@ export default function ExperienceSection() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          font-weight: 800;
+          font-weight: 700;
           font-size: 1.05rem;
+          font-family: var(--font-sans), sans-serif;
+          letter-spacing: -0.02em;
           text-decoration: none;
-          background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          transition: filter 0.3s ease;
+          color: var(--text-primary);
+          transition: color 0.25s ease;
         }
-        .exp-company-link:hover { filter: brightness(1.25); }
+        .exp-company-link:hover { color: var(--accent-ink); }
         .exp-company-link svg {
-          color: var(--accent-a);
-          -webkit-text-fill-color: initial;
+          color: var(--text-muted);
           opacity: 0.75;
         }
 
@@ -173,13 +172,13 @@ export default function ExperienceSection() {
           align-items: center;
           gap: 5px;
           font-size: 11px;
-          font-weight: 600;
+          font-weight: 500;
           padding: 4px 10px;
-          border-radius: 999px;
+          border-radius: 2px;
           color: var(--text-muted);
           border: 1px solid var(--bg-card-border);
           background: var(--bg-badge);
-          font-family: var(--font-nunito), sans-serif;
+          font-family: var(--font-sans), sans-serif;
           white-space: nowrap;
         }
         .exp-chip-current {
@@ -198,14 +197,14 @@ export default function ExperienceSection() {
 
         .exp-tag {
           font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
+          font-weight: 500;
+          letter-spacing: 0.02em;
           padding: 4px 10px;
-          border-radius: 8px;
-          color: var(--accent-a);
-          background: color-mix(in srgb, var(--accent-a) 9%, transparent);
-          border: 1px solid color-mix(in srgb, var(--accent-a) 28%, transparent);
+          border-radius: 2px;
+          color: var(--text-secondary);
+          background: var(--bg-badge);
+          border: 1px solid var(--bg-card-border);
+          text-transform: none;
         }
 
         .exp-point {
@@ -231,23 +230,8 @@ export default function ExperienceSection() {
 
       <div className="section-container relative z-10" ref={rootRef}>
         {/* Header */}
-        <div className="mb-16 text-center reveal">
-          <p className="text-xs font-semibold tracking-[0.3em] uppercase mb-4" style={{ color: '#22D3EE' }}>
-            Where I&apos;ve Worked
-          </p>
-          <h2 className="font-black" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-primary)' }}>
-            Work{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #22D3EE, #818CF8)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Experience
-            </span>
-          </h2>
+        <div className="mb-16 reveal">
+          <SectionHeading index="02" eyebrow="Where I've worked" title="Work" italicWord="experience" />
         </div>
 
         {/* Timeline */}

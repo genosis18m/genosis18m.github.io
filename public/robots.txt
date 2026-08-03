@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /hackathon-state
+Disallow: /hackathon-state/
 
+Host: https://mohitadoni.dev
 Sitemap: https://mohitadoni.dev/sitemap.xml

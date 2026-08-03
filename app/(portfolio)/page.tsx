@@ -6,18 +6,22 @@ import PositionsSection from '@/components/PositionsSection'
 import ProjectsSection from '@/components/ProjectsSection'
 import SkillsSection from '@/components/SkillsSection'
 import ContactSection from '@/components/ContactSection'
+import JsonLd from '@/components/JsonLd'
 
 export default function Home() {
   return (
-    <main className="relative">
-      <Navbar />
-      <HeroPaint />
-      <AboutSection />
-      <ExperienceSection />
-      <PositionsSection />
-      <ProjectsSection />
-      <SkillsSection />
-      <ContactSection />
-    </main>
+    <>
+      <JsonLd />
+      <main className="relative" id="main-content">
+        <Navbar />
+        <HeroPaint />
+        <AboutSection />
+        <ExperienceSection />
+        <PositionsSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <ContactSection />
+      </main>
+    </>
   )
 }

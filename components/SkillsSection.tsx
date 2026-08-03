@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { FaCode, FaBrain, FaGlobe, FaCubes } from 'react-icons/fa'
+import SectionHeading from '@/components/SectionHeading'
 
 const skillGroups = [
   {
@@ -94,19 +95,21 @@ export default function SkillsSection() {
 
         .skillv2-chip {
           font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.04em;
+          font-weight: 500;
+          letter-spacing: 0.01em;
           padding: 5px 10px;
-          border-radius: 8px;
-          color: var(--accent-a);
-          background: color-mix(in srgb, var(--accent-a) 9%, transparent);
-          border: 1px solid color-mix(in srgb, var(--accent-a) 26%, transparent);
-          transition: transform 0.25s ease, background 0.25s ease;
+          border-radius: 2px;
+          color: var(--text-secondary);
+          background: var(--bg-badge);
+          border: 1px solid var(--bg-card-border);
+          transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
           cursor: default;
+          font-family: var(--font-sans), sans-serif;
         }
         .skillv2-chip:hover {
           transform: translateY(-2px);
-          background: color-mix(in srgb, var(--accent-a) 16%, transparent);
+          color: var(--text-primary);
+          border-color: var(--text-muted);
         }
       `}</style>
 
@@ -120,34 +123,13 @@ export default function SkillsSection() {
       <div className="section-container relative z-10">
         {/* Header */}
         <motion.div
-          className="mb-14 text-center"
+          className="mb-14"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p
-            className="text-xs font-display font-semibold tracking-[0.3em] uppercase mb-4"
-            style={{ color: '#10B981' }}
-          >
-            Expertise
-          </p>
-          <h2
-            className="font-display font-black"
-            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-primary)' }}
-          >
-            Technical{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #10B981, #3B82F6)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Skills
-            </span>
-          </h2>
+          <SectionHeading index="05" eyebrow="Expertise" title="Technical" italicWord="skills" />
         </motion.div>
 
         <motion.div
@@ -166,7 +148,7 @@ export default function SkillsSection() {
                 <div className="flex items-center gap-3 mb-5">
                   <div className="skillv2-icon">{group.icon}</div>
                   <h3
-                    className="font-display font-black text-lg"
+                    className="font-display font-bold text-lg tracking-[-0.02em]"
                     style={{ color: 'var(--text-primary)' }}
                   >
                     {group.category}

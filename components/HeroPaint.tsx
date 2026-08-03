@@ -24,184 +24,156 @@ export default function PaintHero() {
 
   return (
     <section className="relative w-full h-screen overflow-hidden" id="home">
-      {/* Background */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139,92,246,0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 20%, rgba(59,130,246,0.08) 0%, transparent 50%), var(--bg)',
+          background: isLight
+            ? 'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(28,28,26,0.04) 0%, transparent 60%), var(--bg)'
+            : 'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(212,196,168,0.06) 0%, transparent 60%), var(--bg)',
         }}
       />
 
-      {/* Subtle grid overlay */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.04] mix-blend-overlay pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(var(--divider) 1px, transparent 1px), linear-gradient(90deg, var(--divider) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
+            'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
         }}
       />
 
-      {/* Drifting aurora glow */}
-      <div className="hero-aurora hero-aurora-1" />
-      <div className="hero-aurora hero-aurora-2" />
+      <div className="hero-aurora hero-aurora-1" style={{ opacity: 0.28 }} />
+      <div className="hero-aurora hero-aurora-2" style={{ opacity: 0.2 }} />
 
-      {/* Hero text overlay */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center z-10"
-        style={{ paddingTop: '6vh' }}
+        className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center"
+        style={{ paddingTop: '2vh' }}
       >
-        {/* Name + Coffee Button */}
         <div
-          className={`flex items-center justify-center gap-5 flex-wrap px-4 transition-all duration-1000 ${
+          className={`flex flex-col items-center px-4 transition-all duration-1000 ${
             showName ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <h1
-            className="font-black text-center leading-none select-none"
-            style={{
-              fontSize: 'clamp(2.4rem, 9vw, 8.5rem)',
-              letterSpacing: '-0.03em',
-              fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
-              background:
-                'linear-gradient(120deg, var(--text-primary) 0%, #8B5CF6 45%, #3B82F6 70%, #22D3EE 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: 'drop-shadow(0 0 40px rgba(139,92,246,0.25))',
-            }}
+          <p
+            className="font-serif text-sm italic mb-5"
+            style={{ color: 'var(--text-muted)' }}
           >
-            Mohit Adoni
-          </h1>
+            Portfolio / 2026
+          </p>
 
-          {/* Coffee button — hidden on phones */}
-          <div className="hidden sm:block" style={{ transform: 'rotate(-6deg)', flexShrink: 0 }}>
-            <CoffeeButton />
+          <div className="relative inline-flex items-center justify-center">
+            <h1
+              className="select-none text-center"
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 'clamp(2.75rem, 9.5vw, 7rem)',
+                fontWeight: 600,
+                letterSpacing: '-0.045em',
+                lineHeight: 1.05,
+                color: 'var(--text-primary)',
+              }}
+            >
+              Mohit Adoni
+            </h1>
+            <div
+              className="pointer-events-auto absolute left-[calc(100%+0.75rem)] top-1/2 hidden -translate-y-1/2 -rotate-6 sm:block"
+            >
+              <CoffeeButton />
+            </div>
+          </div>
+
+          <div
+            className="mt-6 flex items-center gap-3"
+            aria-hidden
+          >
+            <span
+              className="h-px w-12 sm:w-16"
+              style={{
+                background: 'linear-gradient(90deg, transparent, var(--text-muted))',
+              }}
+            />
+            <span
+              className="w-1 h-1 rounded-full"
+              style={{ background: 'var(--accent-ink)' }}
+            />
+            <span
+              className="h-px w-12 sm:w-16"
+              style={{
+                background: 'linear-gradient(90deg, var(--text-muted), transparent)',
+              }}
+            />
           </div>
         </div>
 
-        {/* Minimal decorative line */}
-        {showName && (
-          <div className="flex items-center gap-3 mt-5 mb-5">
-            <div
-              className="h-[1px] w-16"
-              style={{
-                background:
-                  'linear-gradient(90deg, transparent, rgba(139,92,246,0.5))',
-              }}
-            />
-            <div
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ background: '#8B5CF6' }}
-            />
-            <div
-              className="h-[1px] w-16"
-              style={{
-                background:
-                  'linear-gradient(90deg, rgba(139,92,246,0.5), transparent)',
-              }}
-            />
-          </div>
-        )}
-
-        {/* Subtitle */}
         <div
-          className={`transition-all duration-1000 delay-200 ${
+          className={`mt-7 flex flex-col items-center px-4 transition-all duration-1000 ${
             showSubtitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
           <p
-            className="text-center font-medium tracking-[0.22em] uppercase"
-            style={{
-              fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
-              fontSize: 'clamp(0.8rem, 2.2vw, 1.25rem)',
-              backgroundImage: isLight
-                ? 'linear-gradient(90deg, #7c3aed, #2563eb, #7c3aed)'
-                : 'linear-gradient(90deg, #a5f3fc, #818cf8, #c4b5fd)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: isLight
-                ? 'drop-shadow(0 1px 2px rgba(124,58,237,0.2))'
-                : 'drop-shadow(0 0 18px rgba(129,140,248,0.5)) drop-shadow(0 0 40px rgba(165,243,252,0.2))',
-              letterSpacing: '0.22em',
-            }}
+            className="font-serif text-[clamp(1.05rem,2.2vw,1.35rem)] leading-snug max-w-lg"
+            style={{ color: 'var(--text-secondary)' }}
           >
-            Full-Stack &amp; Agentic AI Developer
+            Full-stack &amp; agentic AI developer building{' '}
+            <em className="emphasis" style={{ color: 'var(--accent-ink)' }}>
+              systems that ship
+            </em>
+            — from IIT Roorkee.
           </p>
           <p
-            className="text-center mt-2"
-            style={{
-              fontFamily: "var(--font-inter), 'Inter', sans-serif",
-              fontSize: 'clamp(0.7rem, 1.5vw, 0.95rem)',
-              color: 'var(--text-muted)',
-              letterSpacing: '0.12em',
-            }}
+            className="mt-3 text-sm"
+            style={{ color: 'var(--text-muted)', letterSpacing: '0.02em' }}
           >
-            IIT Roorkee · Materials Engineering · B.Tech 2027
+            Materials Engineering · B.Tech 2027
           </p>
-        </div>
 
-        {/* CTA Buttons */}
-        {showSubtitle && (
-          <div
-            className="flex flex-col sm:flex-row gap-4 mt-8 justify-center items-center px-6"
-            style={{ animation: 'fadeInUp 0.8s ease 0.2s both' }}
-          >
+          <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="#projects"
-              className="px-8 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center justify-center px-7 py-3 text-sm font-semibold tracking-wide transition-transform duration-300 hover:scale-[1.02]"
               style={{
-                fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
-                background: 'linear-gradient(135deg, #8B5CF6, #3B82F6 70%, #22D3EE)',
-                color: 'white',
-                boxShadow: '0 0 30px rgba(139,92,246,0.4), 0 0 60px rgba(34,211,238,0.15)',
+                fontFamily: 'var(--font-sans)',
+                background: 'var(--text-primary)',
+                color: 'var(--bg)',
+                borderRadius: '2px',
               }}
             >
-              View Projects
+              View projects
             </a>
             <a
               href="mailto:mohit_a@mt.iitr.ac.in"
-              className="px-8 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center justify-center px-7 py-3 text-sm font-semibold tracking-wide transition-colors duration-300"
               style={{
-                fontFamily: "var(--font-space-grotesk), 'Inter', sans-serif",
-                border: '2px solid rgba(124,58,237,0.35)',
-                background: isLight ? 'rgba(124,58,237,0.06)' : 'rgba(255,255,255,0.06)',
+                fontFamily: 'var(--font-sans)',
+                border: '1px solid var(--bg-card-border)',
                 color: 'var(--text-primary)',
-                backdropFilter: 'blur(10px)',
+                borderRadius: '2px',
+                background: 'transparent',
               }}
             >
-              Get in Touch
+              Get in touch
             </a>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Scroll indicator */}
       {showScroll && (
         <div
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
           style={{ animation: 'fadeIn 1s ease both' }}
         >
           <span
-            className="text-xs tracking-widest uppercase"
+            className="font-serif text-xs italic"
             style={{ color: 'var(--text-label)' }}
           >
-            Scroll
+            scroll
           </span>
           <div
-            className="w-6 h-10 rounded-full border flex items-start justify-center pt-2"
-            style={{ borderColor: 'var(--bg-card-border)' }}
-          >
-            <div
-              className="w-1 h-3 rounded-full"
-              style={{
-                background: 'linear-gradient(180deg, #8B5CF6, transparent)',
-                animation: 'float 1.5s ease-in-out infinite',
-              }}
-            />
-          </div>
+            className="w-[1px] h-10 origin-top"
+            style={{
+              background: 'linear-gradient(180deg, var(--text-muted), transparent)',
+              animation: 'float 1.8s ease-in-out infinite',
+            }}
+          />
         </div>
       )}
     </section>

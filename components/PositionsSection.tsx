@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiCalendar } from 'react-icons/fi'
+import SectionHeading from '@/components/SectionHeading'
 
 const positions = [
   {
@@ -69,7 +70,7 @@ export default function PositionsSection() {
         .pos-card {
           background: var(--bg-card);
           border: 1px solid var(--bg-card-border);
-          border-radius: 1.25rem;
+          border-radius: 4px;
           padding: 1.75rem;
           box-shadow: 0 4px 24px var(--shadow);
           position: relative;
@@ -83,23 +84,23 @@ export default function PositionsSection() {
           content: '';
           position: absolute;
           inset: 0 0 auto 0;
-          height: 3px;
-          background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-          opacity: 0.75;
+          height: 2px;
+          background: var(--accent-a);
+          opacity: 0.55;
         }
         .pos-card:hover {
-          border-color: color-mix(in srgb, var(--accent-a) 40%, transparent);
-          box-shadow: 0 12px 40px var(--shadow), 0 0 40px color-mix(in srgb, var(--accent-a) 12%, transparent);
+          border-color: color-mix(in srgb, var(--accent-a) 35%, transparent);
+          box-shadow: 0 12px 36px var(--shadow);
         }
 
         .pos-logo {
-          width: 56px;
-          height: 56px;
+          width: 52px;
+          height: 52px;
           border-radius: 50%;
           overflow: hidden;
           flex-shrink: 0;
-          border: 2px solid color-mix(in srgb, var(--accent-a) 55%, transparent);
-          box-shadow: 0 0 16px color-mix(in srgb, var(--accent-a) 25%, transparent);
+          border: 1px solid var(--bg-card-border);
+          box-shadow: none;
         }
 
         .pos-period {
@@ -107,24 +108,21 @@ export default function PositionsSection() {
           align-items: center;
           gap: 5px;
           font-size: 11px;
-          font-weight: 600;
+          font-weight: 500;
           padding: 4px 10px;
-          border-radius: 999px;
+          border-radius: 2px;
           color: var(--text-muted);
           border: 1px solid var(--bg-card-border);
           background: var(--bg-badge);
-          font-family: var(--font-nunito), sans-serif;
+          font-family: var(--font-sans), sans-serif;
           white-space: nowrap;
           width: fit-content;
         }
 
         .pos-org {
           font-size: 13px;
-          font-weight: 700;
-          background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          font-weight: 500;
+          color: var(--text-secondary);
         }
 
         .pos-point {
@@ -134,11 +132,11 @@ export default function PositionsSection() {
         }
         .pos-point-dot {
           margin-top: 7px;
-          width: 5px;
-          height: 5px;
+          width: 4px;
+          height: 4px;
           border-radius: 50%;
           flex-shrink: 0;
-          background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+          background: var(--text-muted);
         }
       `}</style>
 
@@ -150,26 +148,18 @@ export default function PositionsSection() {
       <div className="section-container relative z-10">
         {/* Header */}
         <motion.div
-          className="mb-14 text-center"
+          className="mb-14"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="text-xs font-semibold tracking-[0.3em] uppercase mb-4" style={{ color: 'var(--paint-purple)' }}>
-            Positions of Responsibility
-          </p>
-          <h2 className="font-black" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-primary)' }}>
-            Campus{' '}
-            <span style={{
-              background: 'linear-gradient(135deg, #8B5CF6, #F97316)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}>
-              Leadership
-            </span>
-          </h2>
+          <SectionHeading
+            index="03"
+            eyebrow="Positions of responsibility"
+            title="Campus"
+            italicWord="leadership"
+          />
         </motion.div>
 
         {/* Cards */}
@@ -198,7 +188,10 @@ export default function PositionsSection() {
                     />
                   </div>
                   <div>
-                    <h3 className="font-black text-lg leading-tight" style={{ color: 'var(--text-primary)' }}>
+                    <h3
+                      className="font-semibold text-lg leading-tight tracking-[-0.02em]"
+                      style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}
+                    >
                       {pos.role}
                     </h3>
                     <p className="pos-org" title={pos.orgFull}>{pos.org}</p>

@@ -1,32 +1,33 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk, Nunito } from 'next/font/google'
+import { Bricolage_Grotesque, Fraunces } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/context/ThemeContext'
-import SiteLoader from '@/components/SiteLoader'
-import GauntletCursorLoader from '@/components/GauntletCursorLoader'
 
-const inter = Inter({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-sans',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-serif',
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
 })
 
-
-
-const nunito = Nunito({
-  subsets: ['latin'],
-  variable: '--font-nunito',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-})
+const siteUrl = 'https://mohitadoni.dev'
 
 export const metadata: Metadata = {
-  title: 'Mohit Adoni — Full-Stack & Agentic AI Developer',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Mohit Adoni — Full-Stack & Agentic AI Developer',
+    template: '%s · Mohit Adoni',
+  },
   description:
-    'Portfolio of Mohit Adoni, a Full-Stack & Agentic AI Developer from IIT Roorkee. Specializing in Go, React, TypeScript, LangChain, and AI-powered systems.',
+    'Portfolio of Mohit Adoni, Full-Stack & Agentic AI Developer from IIT Roorkee. Building with Go, React, TypeScript, LangChain, and production AI systems.',
   keywords: [
     'Mohit Adoni',
     'Full Stack Developer',
@@ -37,24 +38,40 @@ export const metadata: Metadata = {
     'TypeScript',
     'LangChain',
     'Portfolio',
+    'Software Engineer India',
+    'AI Engineer',
   ],
-  authors: [{ name: 'Mohit Adoni' }],
+  authors: [{ name: 'Mohit Adoni', url: siteUrl }],
   creator: 'Mohit Adoni',
+  publisher: 'Mohit Adoni',
+  category: 'technology',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
-    locale: 'en_US',
-    url: 'https://mohitadoni.dev',
+    locale: 'en_IN',
+    url: siteUrl,
     title: 'Mohit Adoni — Full-Stack & Agentic AI Developer',
     description:
-      'Portfolio of Mohit Adoni, a Full-Stack & Agentic AI Developer from IIT Roorkee.',
-    siteName: 'Mohit Adoni Portfolio',
+      'Full-Stack & Agentic AI Developer from IIT Roorkee. Go, React, TypeScript, LangChain.',
+    siteName: 'Mohit Adoni',
+    images: [
+      {
+        url: '/avatar.jpg',
+        width: 800,
+        height: 800,
+        alt: 'Mohit Adoni',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Mohit Adoni — Full-Stack & Agentic AI Developer',
     description:
-      'Portfolio of Mohit Adoni, a Full-Stack & Agentic AI Developer from IIT Roorkee.',
+      'Full-Stack & Agentic AI Developer from IIT Roorkee. Go, React, TypeScript, LangChain.',
     creator: '@mohitadoni',
+    images: ['/avatar.jpg'],
   },
   robots: {
     index: true,
@@ -67,6 +84,11 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
 }
 
 export default function RootLayout({
@@ -75,13 +97,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" data-theme="dark">
-      <body className={`${inter.variable} ${spaceGrotesk.variable} ${nunito.variable} font-sans antialiased`}>
-        <ThemeProvider>
-          <GauntletCursorLoader />
-          <SiteLoader />
-          {children}
-        </ThemeProvider>
+    <html lang="en" data-theme="dark">
+      <body className={`${bricolage.variable} ${fraunces.variable} font-sans antialiased`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   )

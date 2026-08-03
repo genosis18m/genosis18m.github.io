@@ -92,7 +92,7 @@ export default function Navbar() {
           color: var(--bg);
           transition: color 2s ease;
           z-index: 2;
-          font-family: var(--font-nunito), sans-serif;
+          font-family: var(--font-sans), sans-serif;
           text-transform: uppercase;
           pointer-events: none;
           line-height: 1;
@@ -105,7 +105,7 @@ export default function Navbar() {
           {/* Logo */}
           <a
             href="#home"
-            className="flex items-center justify-center overflow-hidden rounded-full border-2 border-transparent hover:border-[#8B5CF6] transition-all duration-300"
+            className="flex items-center justify-center overflow-hidden rounded-full border-2 border-transparent hover:border-[rgba(244,244,241,0.35)] transition-all duration-300"
             style={{ width: '40px', height: '40px', background: 'var(--bg-card)' }}
             title="Home"
           >

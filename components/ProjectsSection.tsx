@@ -1,389 +1,292 @@
 'use client'
 
 import { useState } from 'react'
-import { FiGithub, FiGlobe } from 'react-icons/fi'
-import { FaServer, FaCamera, FaHospital, FaWaveSquare, FaSpaceShuttle, FaRobot } from 'react-icons/fa'
+import { FiArrowUpRight, FiGithub } from 'react-icons/fi'
+import SectionHeading from '@/components/SectionHeading'
 
 interface Project {
   id: string
   title: string
   shortTitle: string
-  icon: React.ReactNode
+  year: string
   tagline: string
   description: string[]
   tech: string[]
-  color: string
   github: string
   live?: string
-  accentColor: string
-  emoji?: string
-  headerPattern?: string
-  headerPatternSize?: string
-  headerGlow?: string
 }
 
 const projects: Project[] = [
   {
     id: 'autoconf',
-    title: 'AutoConf — AI Conference Planner',
-    shortTitle: 'AutoConf AI',
-    icon: <FaRobot />,
-    tagline: '7 AI agents plan an entire conference in minutes',
+    title: 'AutoConf',
+    shortTitle: 'AutoConf',
+    year: '2026',
+    tagline: 'Seven AI agents that plan an entire conference in under a minute.',
     description: [
-      'Built a fully autonomous conference planning platform powered by 7 specialized AI agents (Sponsor Research, Speaker Curation, Ticketing, Venue Selection, Pricing, GTM, and Ops) running concurrently via an async FastAPI orchestrator with real-time WebSocket streaming.',
-      'Integrated Groq (LLaMA 3), Google Gemini, Tavily AI Search, and Google Places API to deliver production-ready conference plans — sponsors with outreach emails, speaker lineups, revenue forecasts, and a complete run-of-show — all in under 60 seconds.',
-      'Shipped a full-stack React + TypeScript frontend with a live agent dashboard, tabbed results view, PDF export via ReportLab, and a zero-backend demo mode (pre-cached data bundled in the frontend) deployed on Vercel.',
+      'Built a fully autonomous conference planning platform powered by 7 specialized AI agents running concurrently via an async FastAPI orchestrator with real-time WebSocket streaming.',
+      'Integrated Groq (LLaMA 3), Gemini, Tavily, and Google Places to ship sponsors, speaker lineups, revenue forecasts, and a full run-of-show.',
+      'Shipped a React + TypeScript frontend with a live agent dashboard, PDF export, and a zero-backend demo mode on Vercel.',
     ],
-    tech: ['FastAPI', 'React', 'TypeScript', 'Groq', 'Gemini', 'Tavily', 'Google Places API', 'Supabase', 'WebSockets', 'ReportLab', 'Vite', 'Zustand'],
-    color: 'from-amber-500 via-orange-500 to-rose-500',
-    accentColor: '#F59E0B',
+    tech: ['FastAPI', 'React', 'TypeScript', 'Groq', 'Gemini', 'WebSockets', 'Supabase'],
     github: 'https://github.com/genosis18m/AutoConf-multiAgents',
     live: 'https://auto-conf-multi-agents.vercel.app',
-    emoji: '🤖',
-    headerPattern:
-      'radial-gradient(circle at 25% 35%, rgba(255,255,255,0.18) 0 2px, transparent 2.5px), radial-gradient(circle at 70% 15%, rgba(255,255,255,0.14) 0 2px, transparent 2.5px), linear-gradient(60deg, rgba(255,255,255,0.06) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.06) 75%, transparent 75%, transparent)',
-    headerPatternSize: '30px 30px, 48px 48px, 90px 90px',
-    headerGlow:
-      'radial-gradient(circle at 10% 15%, rgba(255,255,255,0.32), transparent 40%), radial-gradient(circle at 90% 80%, rgba(245,158,11,0.3), transparent 45%)',
   },
   {
     id: 'medical',
     title: 'Medical Appointment System',
-    shortTitle: 'AI Medical Agent',
-    icon: <FaHospital />,
-    tagline: 'AI-powered scheduling with MCP integration',
+    shortTitle: 'Medic Agent',
+    year: '2025',
+    tagline: 'AI scheduling with custom MCP tools for clinics.',
     description: [
-      'Built an AI-powered medical appointment system using FastAPI and React, integrating 13 custom MCP tools for intelligent booking, patient history management, and automated doctor reporting.',
-      'Architected a standalone MCP server using JSON-RPC, enabling reusable AI tool access across multiple clients (Claude Desktop, VSCode) with strict role-based access control.',
-      'Integrated Google Calendar API for automated scheduling, Gmail SMTP for patient notifications, and Slack webhooks for real-time doctor alerts — reducing manual coordination by 70%.',
+      'Built an AI-powered medical appointment system using FastAPI and React, with 13 custom MCP tools for booking, history, and doctor reporting.',
+      'Architected a standalone MCP server over JSON-RPC so the same tools work in Claude Desktop and VS Code, with role-based access.',
+      'Wired Google Calendar, Gmail SMTP, and Slack alerts — cutting manual coordination by about 70%.',
     ],
-    tech: ['FastAPI', 'React', 'MCP', 'JSON-RPC', 'Google Calendar API', 'Gmail SMTP', 'Slack API', 'Python'],
-    color: 'from-green-500 to-teal-400',
-    accentColor: '#10B981',
+    tech: ['FastAPI', 'React', 'MCP', 'Google Calendar', 'Slack', 'Python'],
     github: 'https://github.com/genosis18m/Medic-assistant',
   },
   {
     id: 'metaverse',
-    title: '2D Metaverse Platform',
-    shortTitle: 'Real-time Metaverse',
-    icon: <FaSpaceShuttle />,
-    tagline: 'Real-time multiplayer virtual world',
+    title: '2D Metaverse',
+    shortTitle: 'Metaverse',
+    year: '2025',
+    tagline: 'Real-time multiplayer spaces with sub-50ms sync.',
     description: [
-      'Engineered a real-time multiplayer platform using Go, WebSockets, and PostgreSQL to synchronize user movement, chat, and state across virtual spaces with <50ms latency.',
-      'Architected scalable microservices with Gin framework and GORM, implementing JWT authentication, Google OAuth 2.0, and RESTful APIs for space management.',
-      'Built a high-performance React + TypeScript frontend with Canvas API rendering at 60 FPS, optimistic UI updates, and responsive design for cross-device accessibility.',
+      'Engineered a real-time multiplayer platform in Go, WebSockets, and PostgreSQL for movement, chat, and shared state.',
+      'Built Gin microservices with JWT auth, Google OAuth, and REST APIs for space management.',
+      'Rendered a React + TypeScript Canvas client at 60 FPS with optimistic updates.',
     ],
-    tech: ['Go', 'WebSockets', 'PostgreSQL', 'React', 'TypeScript', 'Canvas API', 'JWT', 'OAuth 2.0'],
-    color: 'from-blue-600 to-cyan-500',
-    accentColor: '#3B82F6',
+    tech: ['Go', 'WebSockets', 'PostgreSQL', 'React', 'TypeScript', 'Canvas'],
     github: 'https://github.com/genosis18m/Metaverse_go',
     live: 'https://go-metaverse.vercel.app/',
   },
   {
     id: 'golf-fego',
-    title: 'Golf Charity Draw Platform',
+    title: 'Golf Charity Draw',
     shortTitle: 'GOLf-fego',
-    icon: (
-      <span aria-hidden="true" className="inline-block leading-none">
-        ⛳
-      </span>
-    ),
-    tagline: 'Subscription-powered charity draws with member and admin workflows',
+    year: '2026',
+    tagline: 'Subscriptions, draws, and admin ops for charity golf.',
     description: [
-      'Built a full-stack web application using Next.js 16, React 19, TypeScript, Tailwind CSS, Supabase, Stripe, and Vercel, delivering responsive public pages, user onboarding, a member dashboard, and an admin portal with authentication and role-based access control.',
-      'Implemented REST API routes, Supabase database and storage integration, Stripe subscription billing and webhook handling, score tracking, charity selection, and profile management for a production-ready member experience.',
-      'Designed a custom prize-draw workflow that enabled end-to-end subscription and draw management across the public site, protected dashboard flows, and operational admin tooling.',
+      'Full-stack Next.js app with member dashboard, admin portal, auth, and role-based access.',
+      'Stripe subscriptions + webhooks, Supabase storage, score tracking, and charity selection.',
+      'Custom prize-draw workflow spanning public site, member flows, and ops tooling.',
     ],
-    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Stripe', 'Vercel'],
-    color: 'from-emerald-600 via-lime-500 to-teal-500',
-    accentColor: '#84CC16',
+    tech: ['Next.js', 'TypeScript', 'Supabase', 'Stripe', 'Tailwind'],
     github: 'https://github.com/genosis18m/golf-subscription-charity-platform',
     live: 'https://golf-subscription-charity-platform.vercel.app/',
-    emoji: '🏌️',
-    headerPattern:
-      'radial-gradient(circle at 18% 28%, rgba(255,255,255,0.28) 0 2px, transparent 2.5px), radial-gradient(circle at 76% 20%, rgba(255,255,255,0.22) 0 2px, transparent 2.5px), linear-gradient(135deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 75%, transparent 75%, transparent)',
-    headerPatternSize: '34px 34px, 42px 42px, 110px 110px',
-    headerGlow:
-      'radial-gradient(circle at 15% 20%, rgba(255,255,255,0.28), transparent 34%), radial-gradient(circle at 85% 78%, rgba(132,204,22,0.28), transparent 40%)',
   },
   {
     id: 'hair',
-    title: 'Hair Analysis SaaS Platform',
-    shortTitle: 'ML Hair Analyzer',
-    icon: <FaCamera />,
-    tagline: 'ML-powered hair health diagnostics',
+    title: 'Hair Analysis SaaS',
+    shortTitle: 'Hair Analyzer',
+    year: '2025',
+    tagline: 'ML diagnostics from a selfie, with credit-based billing.',
     description: [
-      'Developed a full-stack SaaS application integrating custom ML models to diagnose hair health from user images with high accuracy.',
-      'Engineered a credit-based monetization system using Stripe Payment Intents and secure session management for seamless user experience.',
-      'Deployed a responsive UI with persistent analysis history stored in PostgreSQL, optimized for mobile-first performance on Vercel.',
+      'Full-stack SaaS integrating custom ML models to diagnose hair health from user images.',
+      'Credit monetization via Stripe Payment Intents and secure sessions.',
+      'Analysis history in PostgreSQL; mobile-first UI on Vercel.',
     ],
-    tech: ['Next.js', 'Python', 'ML/CV', 'Stripe', 'PostgreSQL', 'Vercel', 'TypeScript'],
-    color: 'from-orange-500 to-yellow-400',
-    accentColor: '#F97316',
+    tech: ['Next.js', 'Python', 'ML/CV', 'Stripe', 'PostgreSQL'],
     github: 'https://github.com/genosis18m/Hair_Webapp',
     live: 'https://hair-analysis-app.vercel.app/',
   },
   {
     id: 'proxy',
-    title: 'Custom Network Proxy Server',
-    shortTitle: 'Go Forward Proxy',
-    icon: <FaServer />,
-    tagline: 'High-performance forward proxy in Go',
+    title: 'Forward Proxy',
+    shortTitle: 'Go Proxy',
+    year: '2025',
+    tagline: 'HTTP/HTTPS tunneling and domain filtering in Go.',
     description: [
-      'Engineered a high-performance forward proxy using Go\'s net package, supporting HTTP forwarding and HTTPS tunneling via the CONNECT method.',
-      'Implemented a goroutine-per-connection concurrency model to handle simultaneous traffic with non-blocking I/O and custom request logging.',
-      'Designed a domain filtering system with subdomain matching to block blacklisted sites using configurable rules and strict request validation.',
+      'High-performance forward proxy using Go’s net package — HTTP forward + HTTPS CONNECT tunnels.',
+      'Goroutine-per-connection model with non-blocking I/O and request logging.',
+      'Configurable domain filtering with subdomain matching and strict validation.',
     ],
-    tech: ['Go', 'net/http', 'Goroutines', 'HTTPS Tunneling', 'Domain Filtering', 'Concurrency'],
-    color: 'from-purple-600 to-pink-500',
-    accentColor: '#8B5CF6',
+    tech: ['Go', 'net/http', 'Goroutines', 'HTTPS Tunneling'],
     github: 'https://github.com/genosis18m/Proxy-Network-Server',
   },
   {
     id: 'astrosonification',
-    title: 'Image Sonification Tool',
-    shortTitle: 'Data Sonifier',
-    icon: <FaWaveSquare />,
-    tagline: 'Transforming astronomical data into sound',
+    title: 'Image Sonification',
+    shortTitle: 'Sonifier',
+    year: '2024',
+    tagline: 'Turn astronomical image arrays into sound.',
     description: [
-      'Engineered a Python-based CLI tool that converts complex astronomical image arrays (.npy) into high-fidelity audio streams by mapping brightness and color to sonic properties.',
-      'Designed efficient data processing pipelines utilizing NumPy and FFmpeg to downsample massive datasets, ensuring performant audio generation without memory bottlenecks.',
-      'Documented a comprehensive user guide with CLI parameter customization (e.g., downsample factor, max pixels) to support diverse scientific data exploration.',
+      'Python CLI that maps .npy image brightness and color into high-fidelity audio.',
+      'NumPy + FFmpeg pipelines to downsample large datasets without memory spikes.',
+      'Documented CLI knobs for downsample factor, max pixels, and exploration workflows.',
     ],
-    tech: ['Python', 'NumPy', 'FFmpeg', 'Data Processing', 'CLI', 'Audio Generation'],
-    color: 'from-slate-900 to-indigo-900',
-    accentColor: '#818CF8',
+    tech: ['Python', 'NumPy', 'FFmpeg', 'CLI'],
     github: 'https://github.com/genosis18m/Astrosonification_tool',
   },
 ]
 
 export default function ProjectsSection() {
-  const [activeTab, setActiveTab] = useState(projects[0].id)
-
-  const active = projects.find((p) => p.id === activeTab)!
-  const headerPattern =
-    active.headerPattern ??
-    'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.9) 1px, transparent 1px), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.85) 1px, transparent 1px)'
-  const headerPatternSize = active.headerPatternSize ?? '40px 40px'
-  const headerGlow =
-    active.headerGlow ??
-    'linear-gradient(135deg, rgba(255,255,255,0.12), transparent 60%)'
+  const [activeId, setActiveId] = useState(projects[0].id)
+  const active = projects.find((p) => p.id === activeId) ?? projects[0]
+  const activeIndex = projects.findIndex((p) => p.id === active.id)
 
   return (
     <section id="projects" className="py-24 relative" style={{ background: 'var(--bg-section)' }}>
-      {/* Background glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 80% 50% at 50% 50%, rgba(139,92,246,0.05) 0%, transparent 70%)',
-        }}
-      />
-
       <div className="section-container relative z-10">
-        {/* Section header */}
-        <div className="mb-16 text-center">
-          <p
-            className="text-xs font-display font-semibold tracking-[0.3em] uppercase mb-4"
-            style={{ color: '#8B5CF6' }}
-          >
-            Selected Work
-          </p>
-          <h2
-            className="font-display font-black"
-            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-primary)' }}
-          >
-            Featured{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #8B5CF6, #3B82F6)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Projects
-            </span>
-          </h2>
-        </div>
+        <SectionHeading index="04" eyebrow="Selected work" title="Featured" italicWord="projects" />
 
-        {/* Tab navigation */}
-        <div className="flex flex-nowrap overflow-x-auto w-full gap-2 py-4 mb-6 justify-start sm:justify-center px-2"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
-        >
-          {projects.map((project) => (
-            <button
-              key={project.id}
-              onClick={() => setActiveTab(project.id)}
-              className="ui-btn"
-              style={{
-                '--hover-btn-color': project.accentColor,
-                '--btn-default-bg': activeTab === project.id ? `${project.accentColor}1A` : 'var(--bg-card)',
-                borderColor: activeTab === project.id ? `${project.accentColor}66` : 'var(--bg-card-border)',
-                color: activeTab === project.id ? project.accentColor : 'var(--text-secondary)',
-                boxShadow: activeTab === project.id ? `0 0 20px ${project.accentColor}33` : '0 4px 15px 0 rgba(0, 0, 0, 0.2)',
-              } as React.CSSProperties}
-            >
-              <span>{project.shortTitle}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Project card */}
-        <div
-          key={active.id}
-          className="rounded-2xl overflow-hidden"
-          style={{
-            background: 'var(--bg-card)',
-            border: `1px solid ${active.accentColor}33`,
-            boxShadow: `0 0 60px ${active.accentColor}15, 0 4px 24px var(--shadow)`,
-            animation: 'fadeInUp 0.4s ease both',
-          }}
-        >
-          {/* Card header with gradient */}
-          <div
-            className={`bg-gradient-to-r ${active.color} p-5 sm:p-8 md:p-12 relative overflow-hidden`}
-          >
-            <div
-              className="absolute inset-0 opacity-80"
-              style={{ backgroundImage: headerGlow }}
-            />
-            {/* Background pattern */}
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage: headerPattern,
-                backgroundSize: headerPatternSize,
-              }}
-            />
-            {/* Giant Watermark Icon */}
-            <div className="absolute -right-8 -bottom-8 text-[300px] opacity-[0.2] mix-blend-overlay rotate-12 select-none pointer-events-none transition-all duration-700">
-              {active.icon}
-            </div>
-            
-            <div className="relative z-10 flex flex-col justify-start gap-2">
-              {active.emoji && (
-                <div className="mb-2 inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-sm font-semibold text-white/95 backdrop-blur-md shadow-lg">
-                  <span aria-hidden="true">{active.emoji}</span>
-                  <span>Featured Build</span>
-                </div>
-              )}
-              <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-3xl shadow-lg border border-white/20 mb-4 drop-shadow-md">
-                {active.icon}
-              </div>
-              <h3 className="font-display font-black text-white mb-2 tracking-tight drop-shadow-md" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
-                {active.title}
-              </h3>
-              <p className="text-white/90 font-medium text-xl border-l-4 border-white/30 pl-4 py-1">{active.tagline}</p>
-            </div>
-          </div>
-
-          {/* Card body */}
-          <div className="p-5 sm:p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-            {/* Description */}
-            <div>
-              <h4 className="font-display font-bold text-sm tracking-widest uppercase mb-5" style={{ color: active.accentColor }}>
-                What I Built
-              </h4>
-              <ul className="space-y-4">
-                {active.description.map((point, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span
-                      className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: active.accentColor }}
-                    />
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                      {point}
-                    </p>
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
+          {/* Index */}
+          <nav className="lg:col-span-4" aria-label="Project list">
+            <ol className="border-t" style={{ borderColor: 'var(--divider)' }}>
+              {projects.map((project, i) => {
+                const selected = project.id === active.id
+                return (
+                  <li key={project.id} style={{ borderColor: 'var(--divider)' }} className="border-b">
+                    <button
+                      type="button"
+                      onClick={() => setActiveId(project.id)}
+                      className="group flex w-full items-baseline gap-4 py-4 text-left transition-colors"
+                      style={{ color: selected ? 'var(--text-primary)' : 'var(--text-muted)' }}
+                    >
+                      <span
+                        className="font-serif italic text-sm tabular-nums w-7 shrink-0"
+                        style={{ color: selected ? 'var(--accent-ink)' : 'var(--text-label)' }}
+                      >
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span
+                          className="block text-[15px] sm:text-base font-semibold tracking-[-0.02em] transition-colors"
+                          style={{
+                            color: selected ? 'var(--text-primary)' : 'var(--text-secondary)',
+                          }}
+                        >
+                          {project.shortTitle}
+                        </span>
+                        <span
+                          className="mt-0.5 block text-xs"
+                          style={{ color: 'var(--text-label)' }}
+                        >
+                          {project.year}
+                        </span>
+                      </span>
+                      <span
+                        className="text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ color: 'var(--text-muted)' }}
+                        aria-hidden
+                      >
+                        →
+                      </span>
+                    </button>
                   </li>
-                ))}
-              </ul>
-            </div>
+                )
+              })}
+            </ol>
+          </nav>
 
-            {/* Tech stack */}
-            <div>
-              <h4 className="font-display font-bold text-sm tracking-widest uppercase mb-5" style={{ color: active.accentColor }}>
-                Tech Stack
-              </h4>
-              <div className="flex flex-wrap gap-2 mb-10">
-                {active.tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-4 py-2 rounded-lg text-sm font-semibold transition-colors duration-300 backdrop-blur-sm"
-                    style={{
-                      background: `${active.accentColor}1A`,
-                      color: active.accentColor,
-                      border: `1px solid ${active.accentColor}33`,
-                    }}
-                  >
-                    {tech}
+          {/* Detail */}
+          <article
+            key={active.id}
+            className="lg:col-span-8 lg:sticky lg:top-24 lg:self-start"
+            style={{ animation: 'fadeInUp 0.35s ease both' }}
+          >
+            <p
+              className="font-serif italic text-sm mb-3"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              {String(activeIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+            </p>
+
+            <h3
+              className="font-bold tracking-[-0.035em] leading-[1.05]"
+              style={{
+                fontSize: 'clamp(1.85rem, 4.2vw, 3rem)',
+                color: 'var(--text-primary)',
+              }}
+            >
+              {active.title}
+            </h3>
+
+            <p
+              className="mt-4 font-serif text-lg sm:text-xl leading-snug max-w-xl"
+              style={{ color: 'var(--accent-ink)' }}
+            >
+              {active.tagline}
+            </p>
+
+            <ul className="mt-8 space-y-4 max-w-2xl">
+              {active.description.map((point) => (
+                <li
+                  key={point.slice(0, 40)}
+                  className="prose-body text-[15px] pl-4"
+                  style={{
+                    color: 'var(--text-secondary)',
+                    borderLeft: '1px solid var(--divider)',
+                  }}
+                >
+                  {point}
+                </li>
+              ))}
+            </ul>
+
+            <p
+              className="mt-8 text-sm leading-relaxed max-w-2xl"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              {active.tech.join(' · ')}
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <a
+                href={active.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gh-button-icon"
+                aria-label={`${active.title} on GitHub`}
+              >
+                <div className="gh-icon">
+                  <FiGithub />
+                </div>
+                <div className="gh-cube">
+                  <span className="gh-side gh-front bg-gray-900 border border-gray-700">
+                    Code
                   </span>
-                ))}
-              </div>
-              
-              {/* Repository Links */}
-              <div>
-                <h4 className="font-display font-bold text-sm tracking-widest uppercase mb-6 opacity-80" style={{ color: active.accentColor }}>
-                  Repository
-                </h4>
+                  <span className="gh-side gh-top bg-gray-800 text-white">GitHub</span>
+                </div>
+              </a>
+              {active.live && (
                 <a
-                  href={active.github}
+                  href={active.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="gh-button-icon block w-fit"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 hover:underline"
+                  style={{ color: 'var(--text-primary)' }}
                 >
-                  <div className="gh-icon">
-                    <FiGithub />
-                  </div>
-                  <div className="gh-cube">
-                    <span className="gh-side gh-front bg-gray-900 border border-gray-700">Code</span>
-                    <span 
-                      className="gh-side gh-top" 
-                      style={{ backgroundColor: active.accentColor, color: '#fff' }}
-                    >
-                      GitHub
-                    </span>
-                  </div>
+                  Live demo
+                  <FiArrowUpRight size={15} />
                 </a>
-
-                {active.live && (
-                  <a
-                    href={active.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 mt-4 text-sm font-semibold transition-all duration-300 hover:scale-105 w-fit px-4 py-2 rounded-lg"
-                    style={{
-                      background: `${active.accentColor}1A`,
-                      color: active.accentColor,
-                      border: `1px solid ${active.accentColor}44`,
-                    }}
-                  >
-                    <FiGlobe size={15} />
-                    Live Demo
-                  </a>
-                )}
-              </div>
-
-              {/* Project number indicator */}
-              <div className="mt-8 pt-8 border-t" style={{ borderColor: 'var(--divider)' }}>
-                <p className="text-xs" style={{ color: 'var(--text-label)' }}>
-                  Project {projects.findIndex((p) => p.id === active.id) + 1} of {projects.length}
-                </p>
-                <div className="flex gap-1.5 mt-2">
-                  {projects.map((p) => (
-                    <button
-                      key={p.id}
-                      onClick={() => setActiveTab(p.id)}
-                      className="h-1 rounded-full transition-all duration-300"
-                      style={{
-                        width: p.id === active.id ? '24px' : '8px',
-                        background: p.id === active.id ? active.accentColor : 'var(--bg-card-border)',
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
+              )}
             </div>
-          </div>
+
+            <div className="mt-10 flex items-center gap-3">
+              <button
+                type="button"
+                disabled={activeIndex === 0}
+                onClick={() => setActiveId(projects[activeIndex - 1].id)}
+                className="text-sm disabled:opacity-30 underline-offset-4 hover:underline"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Prev
+              </button>
+              <span style={{ color: 'var(--divider)' }}>/</span>
+              <button
+                type="button"
+                disabled={activeIndex === projects.length - 1}
+                onClick={() => setActiveId(projects[activeIndex + 1].id)}
+                className="text-sm disabled:opacity-30 underline-offset-4 hover:underline"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Next
+              </button>
+            </div>
+          </article>
         </div>
       </div>
     </section>

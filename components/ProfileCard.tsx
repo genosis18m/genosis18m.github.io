@@ -56,20 +56,21 @@ export default function ProfileCard({ enlarged = false }: ProfileCardProps) {
 
         .profile-content .title {
           display: block;
-          color: #e2e8f0;
-          font-weight: 800;
+          color: #f4f4f1;
+          font-weight: 700;
           font-size: clamp(20px, 3.5vw, 30px);
-          font-family: var(--font-nunito), 'Georgia', sans-serif;
-          letter-spacing: -0.01em;
+          font-family: var(--font-sans), sans-serif;
+          letter-spacing: -0.03em;
         }
 
         .profile-content .text {
           display: block;
-          color: rgba(165, 243, 252, 0.85);
+          color: rgba(244, 244, 241, 0.68);
           font-size: clamp(12px, 2vw, 16px);
           margin-top: clamp(6px, 1.2vw, 12px);
           line-height: 1.55;
-          font-family: var(--font-nunito), sans-serif;
+          font-family: var(--font-serif), Georgia, serif;
+          font-style: italic;
         }
 
         .profile-bottom {
@@ -100,16 +101,16 @@ export default function ProfileCard({ enlarged = false }: ProfileCardProps) {
         .profile-bottom .view-more .view-more-button {
           background: none;
           border: none;
-          color: #a78bfa;
-          font-weight: 700;
+          color: var(--accent-ink);
+          font-weight: 600;
           font-size: clamp(12px, 1.8vw, 14px);
           cursor: pointer;
-          font-family: var(--font-nunito), sans-serif;
+          font-family: var(--font-sans), sans-serif;
         }
 
         .profile-bottom .view-more .arrow-svg {
           fill: none;
-          stroke: #a78bfa;
+          stroke: var(--accent-ink);
           stroke-width: 3px;
           height: 14px;
           width: 14px;
@@ -148,7 +149,7 @@ export default function ProfileCard({ enlarged = false }: ProfileCardProps) {
         .profile-bottom .social-buttons-container .social-button .icon {
           width: clamp(14px, 2.5vw, 20px);
           height: clamp(14px, 2.5vw, 20px);
-          color: #a78bfa;
+          color: var(--accent-ink);
         }
 
         .profile-bottom .social-buttons-container .social-button:hover {
@@ -191,14 +192,14 @@ export default function ProfileCard({ enlarged = false }: ProfileCardProps) {
           top: 30px; left: 30px;
           display: grid; place-content: center;
           transition-delay: 1.6s;
-          background: rgba(139, 92, 246, 0.55);
+          background: rgba(212, 196, 168, 0.45);
         }
 
         .profile-logo .circle5 .initials {
           font-size: clamp(11px, 2vw, 18px);
           font-weight: 800;
           color: white;
-          font-family: var(--font-nunito), Georgia, sans-serif;
+          font-family: var(--font-sans), sans-serif;
           line-height: 1;
         }
 
